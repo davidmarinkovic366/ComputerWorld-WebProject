@@ -12,7 +12,7 @@ export class Company {
         this.container = null;
     }
 
-    //Metoda ca popunjavanje metoda dostupnih korisnicima 
+    //Metoda ca popunjavanje metoda dostupnih korisnicima;
     drawCompanyFunctionsMenu(host) {
         this.clearLeftMenu();
 
@@ -27,28 +27,27 @@ export class Company {
 
         let menuItemsContainer = document.createElement('div');
         menuItemsContainer.classList.add('header-nav-sub-items-container');
-        // menuItemsContainer.innerHTML = 'Data' + 'Jos nesto';
         host.appendChild(menuItemsContainer);
         
         for(let i = 0; i < list.length; i++) {
 
-            //Tekst naslova
+            //Tekst naslova;
             let link = document.createElement('a');
             link.classList.add('header-nav-sub-item');
             link.innerHTML = list[i] + '<i class="ri-arrow-down-s-line"></i>';
 
-            //Kontejner za naslov
+            //Kontejner za naslov;
             let smallLink = document.createElement('a');
             smallLink.classList.add('header-nav-sub-items-small-link');
 
-            //Dodavanje naslova na kontejner
+            //Dodavanje naslova na kontejner;
             smallLink.appendChild(link);
 
-            //Kontejner za ovaj link i za dropdown listu
+            //Kontejner za ovaj link i za dropdown listu;
             let smallNavDiv = document.createElement('div');
             smallNavDiv.classList.add('header-nav-sub-items-small-div');
 
-            //Dodavanje linka
+            //Dodavanje linka;
             smallNavDiv.appendChild(smallLink);
             smallNavDiv.addEventListener('click', () => {
 
@@ -69,37 +68,36 @@ export class Company {
 
             });
 
-            //Dodavanje dropdown liste - selectora za metode
+            //Dodavanje dropdown liste - selectora za metode;
             let dropDownMenuItemList = document.createElement('div');
             dropDownMenuItemList.classList.add('header-nav-sub-sub-items-div');
 
-            //Dodavanje jos jednog diva kao kontejner za sve linkove!
+            //Dodavanje jos jednog diva kao kontejner za sve linkove;
             let dropDownMenuItemListContainer = document.createElement('div');
             dropDownMenuItemListContainer.classList.add('header-nav-sub-sub-items-div-container');
 
             //Dodavanje kontejnera za upravljanje drop-down liste na originalni
-            //koji treba da se pojavi samo na poziv
+            //koji treba da se pojavi samo na poziv;
             dropDownMenuItemList.appendChild(dropDownMenuItemListContainer);
             
-            //Dodavanje drop-down liste na linkove
+            //Dodavanje drop-down liste na linkove;
             smallNavDiv.appendChild(dropDownMenuItemList);
 
-            //TODO: Dodavanje sadrzaja samih dropdown listi:
+            //TODO: Dodavanje sadrzaja samih dropdown listi;
             for(let j = 0;  j < bigList[i].length; j++) {
                 
-                //Link
+                //Link;
                 let dropDownMenuItem = document.createElement('a');
                 dropDownMenuItem.classList.add('header-nav-drop-down-item');
 
-                //Sadrzaj samog linka
+                //Sadrzaj samog linka;
                 dropDownMenuItem.innerHTML = bigList[i][j] + '<i class="ri-arrow-drop-right-line"></i>';
 
-                //Dodavanje linka u listu za metode
+                //Dodavanje linka u listu za metode;
                 selectSubList.push(dropDownMenuItem);
 
-                //TODO: Dodavanje linka u div na stranicu:
+                //TODO: Dodavanje linka u div na stranicu;
                 dropDownMenuItemListContainer.appendChild(dropDownMenuItem);
-            
             }
 
             menuItemsContainer.appendChild(smallNavDiv);
@@ -133,6 +131,7 @@ export class Company {
 
             let labelList = ['Store Name:', 'Store Address:', 'Shelf count:'];
             for(let i = 0; i < labelList.length; i++) {
+                //FIXME: Obrisi komentar;
                 /*<div class="small-input-div">
                     <label> </label>
                     <input> </input>
@@ -174,12 +173,12 @@ export class Company {
 
             button.addEventListener('click', () => {
 
-                //Provere da li je sve uneseno se desavaju na backend-u!
+                //Provere da li je sve uneseno se desavaju na backend-u;
                 fetch(`https://localhost:5001/ComputerStore/DodajProdavnicu/${inputList[0].value}/${inputList[1].value}/${inputList[2].value}`,{
                     method:"POST"
                 });
                 
-                //Za ciscenje svih input elementa nakon 
+                //Za ciscenje svih input elementa nakon;
                 inputList.forEach(e => {
                     e.value = '';
                 });
@@ -218,18 +217,18 @@ export class Company {
                 label.classList.add('simple-label');
                 label.innerHTML = labelList[i];
 
-                //Select element
+                //Select element;
                 let selectEl = document.createElement('select');
                 selectEl.classList.add('simple-input-list');
 
-                //Dodavanje selektora za select element na listu
+                //Dodavanje selektora za select element na listu;
                 selectList.push(selectEl);
 
-                //Dodavanje sadrzaja na mali kontejner
+                //Dodavanje sadrzaja na mali kontejner;
                 smallInputContainer.appendChild(label);
                 smallInputContainer.appendChild(selectEl);
 
-                //Dodavanje malog kontejnera na veliki
+                //Dodavanje malog kontejnera na veliki;
                 inputContainerDiv.appendChild(smallInputContainer);
             }
 
@@ -280,8 +279,6 @@ export class Company {
 
             //Event za dugme;
             button.addEventListener('click', () => {
-                console.log(`Prodavnica: ${selectList[1].options[selectList[1].selectedIndex].value}`);
-                console.log(`Racunar: ${selectList[0].options[selectList[0].selectedIndex].value}`);
                 fetch(`https://localhost:5001/ComputerStore/DodajRacunarNaPolicu/${selectList[1].options[selectList[1].selectedIndex].value}/${selectList[0].options[selectList[0].selectedIndex].value}`, {
                     method:"POST"
                 }).then(p => {
@@ -296,9 +293,7 @@ export class Company {
                         });
                     }
                 });
-
             });
-
         });
 
         //Funkcija za prikaz svih instanci prodavnica u bazi podataka:
@@ -311,7 +306,7 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //Container for chosing store by name and button to confirm
+            //Kontejner za odabir prodavnice po imenu i za dugme za potvrdu;
             let cont = document.createElement('div');
             cont.classList.add('main-container-occupancy');
             mainContainer.appendChild(cont);
@@ -375,33 +370,33 @@ export class Company {
 
             //Zato sto imamo puno elemenata, pa moramo nekako da ih 
             //prikazemo na velicinu ekrana, tj, morace da se crtaju do
-            //dna ekrana pa i dalje
+            //dna ekrana pa i dalje;
             let deepContainer = document.createElement('div');
             deepContainer.classList.add('deep-main-container');
             mainContainer.appendChild(deepContainer);
 
-            //Za odabir prodavnice cije stvari zelimo da crtamo
+            //Za odabir prodavnice cije stvari zelimo da crtamo;
             let inputContainer = document.createElement('div');
             inputContainer.classList.add('input-container-div');
             deepContainer.appendChild(inputContainer);
 
-            //Kontejner za listu prodavnica i labelu
+            //Kontejner za listu prodavnica i labelu;
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('small-input-div');
             inputContainer.appendChild(inputContainerDiv);
 
-            //Labela
+            //Labela;
             let label = document.createElement('label');
             label.classList.add('simple-label');
             label.innerHTML = 'Select store:'
             inputContainerDiv.appendChild(label);
 
-            //Lista
+            //Lista;
             let list = document.createElement('select');
             list.classList.add('simple-input-list');
             inputContainerDiv.appendChild(list);
 
-            //Dodavanje opcija u listu
+            //Dodavanje opcija u listu;
             this.storeList.forEach(s => {
                 let opt = document.createElement('option');
                 opt.text = s.name;
@@ -409,19 +404,18 @@ export class Company {
                 list.appendChild(opt);
             })
 
-            //Dugme za potvrdu 
+            //Dugme za potvrdu;
             let button = document.createElement('button');
             button.classList.add('simple-button');
             button.innerHTML = 'Browse' + '<i class="ri-search-2-line"></i>';
             inputContainer.appendChild(button);
 
-            //Za crtanje 'kartica' na body
+            //Za crtanje 'kartica' na body;
             let browseContainer = document.createElement('div');
             browseContainer.classList.add('browse-container');
             browseContainer.classList.add('big-screen-bit-smaller-cards');
             deepContainer.appendChild(browseContainer);
 
-            //
             button.addEventListener('click', () => {
 
                 //Za ciscenje podataka iz prethodno pretrazene prodavnice!
@@ -429,11 +423,11 @@ export class Company {
                 while(browseContainer.firstChild)
                     browseContainer.removeChild(browseContainer.lastChild);
 
-                //TODO: Ovo radi, vraca ID izabrane prodavnice
+                //TODO: Ovo radi, vraca ID izabrane prodavnice;
                 let chosenStore = list[list.selectedIndex].value;
                 let storePtr;
 
-                //Biramo prodavnicu
+                //Biramo prodavnicu;
                 let newComputerList = [];
                 fetch(`https://localhost:5001/ComputerStore/VratiSveRacunareProdavnice/${chosenStore}`, {
                     method:"GET"
@@ -447,7 +441,7 @@ export class Company {
                                 newComputerList.push(comp);
                             })
                         })
-                        //Crtamo sve racunare ove prodavnice na browseContainer
+                        //Crtamo sve racunare ove prodavnice na browseContainer;
                         newComputerList.forEach(s => {
                             s.drawMyselfToCard(browseContainer);
                         })
@@ -465,31 +459,31 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //Kontejner za sve input elemente
+            //Kontejner za sve input elemente;
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
 
             mainContainer.appendChild(inputContainerDiv);
 
-            //Selektori za input elemente 
+            //Selektori za input elemente;
             let selectList = [];
             let labelList = ['Name:', 'Image:'];
             for(let i = 0; i < labelList.length; i++) {
                 
-                //Kontejner za labelu & input element
+                //Kontejner za labelu & input element;
                 let smallInputContainer = document.createElement('div');
                 smallInputContainer.classList.add('small-input-div');
     
                 inputContainerDiv.appendChild(smallInputContainer);
 
-                //Labela
+                //Labela;
                 let label = document.createElement('label');
                 label.classList.add('simple-label');
                 label.innerHTML = labelList[i];
 
                 smallInputContainer.appendChild(label);
 
-                //Input element
+                //Input element;
                 let inputEl = document.createElement('input');
                 inputEl.type = 'text';
                 inputEl.classList.add('input-element');
@@ -499,7 +493,7 @@ export class Company {
                 selectList.push(inputEl);
             }
 
-            //Dugme za potvrdu dodavanja novog racunara u bazu podataka
+            //Dugme za potvrdu dodavanja novog racunara u bazu podataka;
             let button = document.createElement('button');
             button.classList.add('simple-button');
             button.innerHTML = 'Add' + '<i class="ri-add-fill"></i>';
@@ -512,6 +506,7 @@ export class Company {
                 // console.log('../Images/Computer/RAZER R1 EDITION.png')
 
                 //FIXME: Popravi, nesto ne radi oko slanja podataka, pogledaj i backend za svaki slucaj!
+                //FIXME: Popravljeno, problem bio sto su se slali '/' i .png na kraju;
                 fetch(`https://localhost:5001/ComputerStore/DodajRacunar/${selectList[0].value}/${selectList[1].value}`,{
                     method:"POST"
                 }).then(p => {
@@ -537,31 +532,33 @@ export class Company {
             mainContainer.classList.add('make-me-flex-medium-and-up')
             this.container.appendChild(mainContainer);
 
-            //Container for chosing store by name and button to confirm
+            //Kontejner za odabir prdavnice po imenu i za dugme za potvrdu;
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
 
-            //Appending to body
+            //Dodavanje kontejnera na body;
             mainContainer.appendChild(inputContainerDiv);
 
+            //Selektori za input elemente, da ne bi pretrazivali po Id-ju elemente, 
+            //A da je koliko-toliko automatizovano dodavanje elemnta;
             let selectList = [];
             let labelList = ['Type:', 'Hardware:', 'Computer:'];
             
             for(let i = 0; i < labelList.length; i++) {
-                //Label & Input line
+                //Kontejner za labelu i za odabir element;
                 let smallInputContainer = document.createElement('div');
                 smallInputContainer.classList.add('small-input-div');
     
                 inputContainerDiv.appendChild(smallInputContainer);
 
-                //Label
+                //Labela;
                 let label = document.createElement('label');
                 label.classList.add('simple-label');
                 label.innerHTML = labelList[i];
 
                 smallInputContainer.appendChild(label);
 
-                //Dropdown list
+                //Lista za odabir;
                 let selectElement = document.createElement('select');
                 selectElement.classList.add('simple-input-list');
 
@@ -571,25 +568,26 @@ export class Company {
                 inputContainerDiv.appendChild(smallInputContainer);
             }
 
-            //Button for confirm
+            //Dugme za potvrdu;
             let button = document.createElement('button');
             button.classList.add('simple-button');
             button.innerHTML = 'Add' + '<i class="ri-add-fill"></i>';
 
             inputContainerDiv.appendChild(button);
 
-            //Image of component
+            //Slika komponente;
             let img = document.createElement('img');
             img.classList.add('component-body-image');
             mainContainer.appendChild(img);
 
+            //Podaci o komponenti;
             let data = document.createElement('label');
             data.classList.add('simple-label');
             data.classList.add('add-padding-to-bottom');
             mainContainer.appendChild(data);
 
             button.addEventListener('click', () => {
-                // console.log(selectList[0].options[selectList[0].selectedIndex].value);
+                
                 let hardw = selectList[1].options[selectList[1].selectedIndex].value;
                 let comp = selectList[2].options[selectList[2].selectedIndex].value;
 
@@ -624,7 +622,6 @@ export class Company {
                         typesList.push(type);
                     })
                     typesList.forEach(s => {
-                        // console.log(s);
                         let opt = document.createElement('option');
                         opt.text = s.componenaTip;
                         opt.value = s.id;
@@ -664,6 +661,7 @@ export class Company {
             })
         });
 
+        //Metoda za prikaz hardvera racunara;
         selectSubList[7].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -672,44 +670,45 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //Container for browsing cards
+            //Kontejner za prikaz svih kartica;
             let deepContainer = document.createElement('div');
             deepContainer.classList.add('deep-main-container');
             mainContainer.appendChild(deepContainer);
 
-            //Container for chosing store by name and button to confirm
+            //Kontejner za odabir prodavnice i dugme za potvrdu;
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
 
-            //Appending to body
+            //Dodavanje kontejnera za prikaz na njegov kontejner;
             deepContainer.appendChild(inputContainerDiv);
 
-            //For label and select list
+            //Kontejner za labelu i listu opcija;
             let smallInputContainer = document.createElement('div');
             smallInputContainer.classList.add('small-input-div');
 
             inputContainerDiv.appendChild(smallInputContainer);
 
-            //Label
+            //Labela;
             let label = document.createElement('label');
             label.classList.add('simple-label');
             label.innerHTML = 'Computer:';
 
             smallInputContainer.appendChild(label);
 
-            //Drop-down list
+            //Lista opcija;
             let selectEl = document.createElement('select');
             selectEl.classList.add('simple-input-list');
 
             smallInputContainer.appendChild(selectEl);
 
-            //Button
+            //Dugme za potvrdu;
             let button = document.createElement('button');
             button.classList.add('simple-button');
             button.innerHTML = 'Check' + '<i class="ri-question-mark"></i>';
 
             inputContainerDiv.appendChild(button);
 
+            //Kontejner za crtanje malih kartica hardvera ovog racunara;
             let browseContainer = document.createElement('div');
             browseContainer.classList.add('browse-container');
             deepContainer.appendChild(browseContainer);
@@ -722,11 +721,10 @@ export class Company {
                     p.json().then(hardwares => {
                         hardwares.forEach(hardware => {
                             hardware.hardver.forEach(s => {
-                                // console.log(s);
                                 let komponenta = new Hardware(s.hardver.id, s.hardver.hardwareName, s.hardver.tipID, s.hardver.hardwareInfo, s.hardver.hardwarePrice, s.hardver.image);
                                 listaKomponenti.push(komponenta);
                             })
-                            //Cistimo kontejner od prethodnog stampanja!
+                            //Cistimo kontejner od prethodnog stampanja;
                             if(browseContainer.firstChild)
                                 while(browseContainer.firstChild)
                                     browseContainer.removeChild(browseContainer.lastChild);
@@ -738,9 +736,9 @@ export class Company {
                         })
                     })
                 })
-                // console.log(selectEl.options[selectEl.selectedIndex].value);
             });
 
+            //Dodavanje svih racunara koje prodaje ova kompanija na listu opcija;
             let computersList = [];
             fetch('https://localhost:5001/ComputerStore/VratiSveRacunare', {
                 method:"GET"
@@ -759,6 +757,8 @@ export class Company {
             })
         });
 
+
+        //Metoda za rucnu promenu cene racunara;
         selectSubList[8].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -767,10 +767,11 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
+            //Kontejner za liste, labele, dugmice..
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
 
-            //Appending to body
+            //Appending to body;
             mainContainer.appendChild(inputContainerDiv);
 
             let listComputers = [];
@@ -782,25 +783,26 @@ export class Company {
                         listComputers.push(computer);
                     })
 
-                    //For label and select list
+                    //Kontejner za labelu i select listu;
                     let smallInputContainer = document.createElement('div');
                     smallInputContainer.classList.add('small-input-div');
 
                     inputContainerDiv.appendChild(smallInputContainer);
 
-                    //Label
+                    //Labela;
                     let label = document.createElement('label');
                     label.classList.add('simple-label');
                     label.innerHTML = 'Computer:';
 
                     smallInputContainer.appendChild(label);
 
-                    //Drop-down list
+                    //Opadajuca lista;
                     let selectEl = document.createElement('select');
                     selectEl.classList.add('simple-input-list');
 
                     smallInputContainer.appendChild(selectEl);
 
+                    //Popunjavanje podataka opadajuce liste;
                     listComputers.forEach(s => {
                         let opt = document.createElement('option');
                         opt.text = s.computerName;
@@ -808,32 +810,34 @@ export class Company {
                         selectEl.appendChild(opt);
                     })
 
+                    //Kontejner za labelu i input element
                     smallInputContainer = document.createElement('div');
                     smallInputContainer.classList.add('small-input-div');
 
                     inputContainerDiv.appendChild(smallInputContainer);
 
-                    //Label
+                    //Labela;
                     label = document.createElement('label');
                     label.classList.add('simple-label');
                     label.innerHTML = 'New Price:';
 
                     smallInputContainer.appendChild(label);
 
-                    //New Price input:
+                    //Input element za novu cenu;
                     let inputEl = document.createElement('input');
                     inputEl.type = 'number';
                     inputEl.classList.add('input-element');
 
                     smallInputContainer.appendChild(inputEl);
 
-                    //Button
+                    //Dugme za potvrdu nove cene;
                     let button = document.createElement('button');
                     button.classList.add('simple-button');
                     button.innerHTML = 'Change' + '<i class="fa-solid fa-check"></i>';
 
                     inputContainerDiv.appendChild(button);
 
+                    //Labela za prikaz treutne(stare) cene;
                     label = document.createElement('lable');
                     label.classList.add('old-price-label');
                     label.innerHTML = 'Old Price: ';
@@ -842,11 +846,13 @@ export class Company {
 
                     button.addEventListener('click', () => {
                         //FIXME: Popravi CORS-e da omogucis da se vrsi PUT 
+                        //FIXME: Popravljeno!
                         fetch(`https://localhost:5001/ComputerStore/IzmeniCenuRacunara/${selectEl.options[selectEl.selectedIndex].value}/${inputEl.value}`, {
                             method:"PUT"
                         });
                     });
 
+                    //Update labele cene racunara;
                     selectEl.addEventListener('click', () => {
                         label.innerHTML = 'Old Price: ' + listComputers[selectEl.selectedIndex].computerPrice + '<i class="ri-coins-line"></i>';
                     })
@@ -854,6 +860,7 @@ export class Company {
             })
         });
 
+        //Metoda za uklanjanje hardvera iz racunara;
         selectSubList[9].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -862,16 +869,16 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //Container for browsing cards
+            //Kontejner za prikaz kartica;
             let deepContainer = document.createElement('div');
             deepContainer.classList.add('deep-main-container');
             mainContainer.appendChild(deepContainer);
 
-            //For label, select list and button
+            //Kontejner za labele, input elemente, dugmice..
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
 
-            //Appending to body
+            //Appending to body;
             deepContainer.appendChild(inputContainerDiv);
 
             let listComputers = [];
@@ -882,24 +889,26 @@ export class Company {
                         listComputers.push(computer);
                     })
 
+                    //Kontejner za labelu i input element;
                     let smallInputContainer = document.createElement('div');
                     smallInputContainer.classList.add('small-input-div');
 
                     inputContainerDiv.appendChild(smallInputContainer);
 
-                    //Label
+                    //Labela;
                     let label = document.createElement('label');
                     label.classList.add('simple-label');
                     label.innerHTML = 'Computer:';
 
                     smallInputContainer.appendChild(label);
 
-                    //Drop-down list
+                    //Opadajuca lista;
                     let selectEl = document.createElement('select');
                     selectEl.classList.add('simple-input-list');
 
                     smallInputContainer.appendChild(selectEl);
 
+                    //Popunjavanje opadajuce liste;
                     listComputers.forEach(s => {
                         let opt = document.createElement('option');
                         opt.text = s.computerName;
@@ -907,17 +916,20 @@ export class Company {
                         selectEl.appendChild(opt);
                     })
 
+                    //Dugme za potvrdu pretrage;
                     let button = document.createElement('button');
                     button.classList.add('simple-button');
                     button.innerHTML = 'Show' + '<i class="ri-search-line"></i>';
 
                     inputContainerDiv.appendChild(button);
 
+                    //Za stvarni prikaz svih kartica komponenta;
                     let browseContainer = document.createElement('div');
                     browseContainer.classList.add('browse-container');
                     deepContainer.appendChild(browseContainer);
 
                     button.addEventListener('click', () => {
+                        //Lista komponenta ovog racunara;
                         let listHardwares = [];
                         fetch(`https://localhost:5001/ComputerStore/VratiHardverOvogRacunara/${selectEl.options[selectEl.selectedIndex].value}`, {
                         method:"GET"})
@@ -925,11 +937,10 @@ export class Company {
                             p.json().then(hardwares => {
                                 hardwares.forEach(hardware => {
                                     hardware.hardver.forEach(s => {
-                                        // console.log(s);
                                         let komponenta = new Hardware(s.hardver.id, s.hardver.hardwareName, s.hardver.tipID, s.hardver.hardwareInfo, s.hardver.hardwarePrice, s.hardver.image);
                                         listHardwares.push(komponenta);
                                     })
-                                    //Cistimo kontejner od prethodnog stampanja!
+                                    //Cistimo kontejner od prethodnog stampanja;
                                     if(browseContainer.firstChild)
                                         while(browseContainer.firstChild)
                                             browseContainer.removeChild(browseContainer.lastChild);
@@ -937,6 +948,7 @@ export class Company {
                                     //TODO: ovo do sad radi lepo, imamo listu hardvera!
                                     listHardwares.forEach(s => {
                                         //FIXME: Isto kao i u prosloj, samo omoguci da se obavi DELETE! FIXME:
+                                        //FIXME: Popravljeno!
                                         s.drawToCardForRemoving(browseContainer, selectEl.options[selectEl.selectedIndex].value);
                                     })
                                 })
@@ -947,8 +959,8 @@ export class Company {
             })
         });
 
-        //FIXME: Radi, samo prepravi kad se sve komponente skinu iz korpe
-        //FIXME: da opet moze da se crta, sve okej ovako izgleda
+
+        //Metoda za prikaz svih racunara koje prodaje ova kompanija;
         selectSubList[10].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -957,15 +969,17 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //Container for browsing cards
+            //Kontejner za prikaz kartica i select elemente;
             let deepContainer = document.createElement('div');
             deepContainer.classList.add('deep-main-container');
             mainContainer.appendChild(deepContainer);
 
+            //Kontejner za prikaz kartica;
             let browseContainer = document.createElement('div');
             browseContainer.classList.add('browse-container');
             deepContainer.appendChild(browseContainer);
 
+            //Lista svih racunara;
             let computersList = [];
             fetch('https://localhost:5001/ComputerStore/VratiSveRacunare', {
             method:"GET"}).then(p => {
@@ -986,46 +1000,48 @@ export class Company {
         //FIXME: Dovrsi samo za ove hardver metode, ne moras sve, ima vec
         //FIXME: dovoljno, i vidi za css sa onim razlicitim dimenzijama
         //FIXME: ekrana da radi!
+
+        //Metoda za dodavanje novog hardvera;
         selectSubList[11].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
-            //Main container
+            //Glavni kontejner;
             let mainContainer = document.createElement('div');
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //For scroll on input
+            //Kontejner za input;
             let deepContainer = document.createElement('div');
             deepContainer.classList.add('deep-main-container');
             deepContainer.classList.add('make-me-flex-medium-and-up');
             deepContainer.classList.add('add-padding-bottom-medium-and-up')
             mainContainer.appendChild(deepContainer);
 
-            //For label, select list/input and button
+            //Kontejner za labelu, select listu/input element i dugme;
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
             inputContainerDiv.classList.add('input-div-two-in-row-flex');
 
-            //Appending to body
+            //Appending to body;
             deepContainer.appendChild(inputContainerDiv);
 
             let labelList = ['Name:', 'Type:', 'Info:', 'Price:', 'Image:'];
             let typesList = ['text', 'input', 'text', 'number', 'text'];
 
             //Da ne bi koristili querySelector, ovo je brze jer odmah imamo 
-            //Pokazivac na trazenu komponentu
+            //Pokazivac na trazenu komponentu;
             let selectList = [];
             let selectEl;
 
             for(let i = 0; i < labelList.length; i++) {
-            //For all label and input combination!
+                //Kontejner za sve labele i input/select elemente;
                 let smallInputContainer = document.createElement('div');
                 smallInputContainer.classList.add('small-input-div');
 
                 inputContainerDiv.appendChild(smallInputContainer);
 
-                //Labela kao uputstvo sta da unesemo od podataka ovde
+                //Labela kao uputstvo sta da unesemo od podataka ovde;
                 let label = document.createElement('label');
                 label.classList.add('simple-label');
                 label.innerHTML = labelList[i];
@@ -1034,6 +1050,7 @@ export class Company {
                 //dva puta ovo dodajemo!
                 smallInputContainer.appendChild(label);
 
+                //Sve su neke select liste osim drugog elementa koji dodajemo na body;
                 if(i == 1) {
                     let typesList = [];
                     fetch(`https://localhost:5001/ComputerStore/VratiSveTipove`, {
@@ -1046,6 +1063,7 @@ export class Company {
                             selectEl = document.createElement('select');
                             selectEl.classList.add('simple-input-list');
 
+                            //Popunjavanje select lista;
                             typesList.forEach(s => {
                                 let opt = document.createElement('option');
                                 opt.text = s.componenaTip;
@@ -1068,7 +1086,6 @@ export class Company {
                     selectList.push(inputEl);
 
                     smallInputContainer.appendChild(inputEl);
-
                 }
 
             }
@@ -1094,44 +1111,48 @@ export class Company {
 
         });
 
+        //Metoda za prikaz svog hardvera koji prodaje ova kompanija;
         selectSubList[12].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
-            //Main container
+            //Glavni kontejner;
             let mainContainer = document.createElement('div');
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //Container for browsing cards
+            //Kontejner za prikaz odabira filtera i samih kartica komponenta;
             let deepContainer = document.createElement('div');
             deepContainer.classList.add('deep-main-container');
             mainContainer.appendChild(deepContainer);
 
-            //For label, select list and button
+            //Kontejner za labelu i select element;
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
             //Appending to body
             deepContainer.appendChild(inputContainerDiv);
 
-            //For chosing components by type
+            //Za odabir komponente po tipu;
             let browseContainer = document.createElement('div');
             browseContainer.classList.add('browse-container');
-            //Appending to body
+
+            //Appending to body;
             deepContainer.appendChild(browseContainer);
 
-            //For label and select list
+            //Kontejner za laelu i select listu;
             let smallInputContainer = document.createElement('div');
             smallInputContainer.classList.add('small-input-div');
 
             inputContainerDiv.appendChild(smallInputContainer);
 
+            //Labela;
             let label = document.createElement('label');
             label.classList.add('simple-label');
             label.innerHTML = 'Filter:';
 
             smallInputContainer.appendChild(label);
 
+            //Lista tipova komponenti;
             let typesList = [];
             fetch(`https://localhost:5001/ComputerStore/VratiSveTipove`, {
                 method:"GET"
@@ -1158,7 +1179,9 @@ export class Company {
                         selectEl.appendChild(opt);
                     })
 
-
+                    //Sve na dole je prikaz komponenta po zadatim kriterijumima, 
+                    //Imamo mogucnost da ih filtriramo po tipu ili da 
+                    //Prikazemo sve komponente odjednom;
                     selectEl.addEventListener('click', () => {
 
                         let hardwaresList = [];
@@ -1200,23 +1223,6 @@ export class Company {
                     })
                 })
             })
-
-            // let hardwaresList = [];
-            // fetch(`https://localhost:5001/ComputerStore/VratiSavHardver`, {
-            // method:"GET"}).then(p => {
-            //     p.json().then(hardwares => {
-            //         hardwares.forEach(hardver => {
-            //             let h = new Hardware(hardver.id, hardver.hardwareName, hardver.tipID, hardver.hardwareInfo, hardver.hardwarePrice, hardver.image);
-            //             hardwaresList.push(h);
-            //         })
-            //         hardwaresList.forEach(s => {
-            //             s.drawHardwareToCard(browseContainer);
-            //         })
-
-            //     })
-            // })
-
-
         });
 
 
@@ -1233,11 +1239,12 @@ export class Company {
         }
     }
 
-    //For closing left menu on function call!
+    //Za zatvaranje levog menija nakon odabira metode!
     closeLeftMenu() {
         document.querySelector('.header-nav-sub').classList.remove('show-subMenu');
     }
 
+    //Just read the name of function..
     clearAndRemove() {
         let pom = document.querySelector('.main-container-div');
         if(pom != null) {
@@ -1247,6 +1254,7 @@ export class Company {
         }
     }
 
+    //Just read the name of function..
     clearAndDelete(host) {
         if(host != null) {
             while(host.firstChild)

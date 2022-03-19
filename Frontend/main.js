@@ -108,7 +108,6 @@ shoppingCart.id = 'header-nav-shopping';
 shoppingCart.innerHTML = '<i class="ri-shopping-cart-line"></i>';
 navigation.appendChild(shoppingCart);
 
-
 //Footer bar:
 let footer = document.createElement('footer');
 footer.classList.add('footer-bar');
@@ -159,7 +158,7 @@ shoppingCart.addEventListener('click', () => {
 });
 
 
-// Draw left menu: 
+//Draw left menu: 
 function drawLeftMenu(host) {
 
     let closeBtn = document.querySelector('.header-sub-nav-close');
@@ -182,6 +181,8 @@ function drawLeftMenu(host) {
 //Draw right menu start look:
 function drawRightMenu(host) {
 
+    //Mora querySelector zato sto se ovaj element crta u drugom .js fajlu, ovde nikako ne
+    //mogu da ga prosledim;
     let closeBtn = document.querySelector('.header-sub-nav-close-cart');
     if(closeBtn != null)
         closeBtn.remove();
@@ -197,7 +198,7 @@ function drawRightMenu(host) {
     });
 }
 
-function clearHost(host) {
-    while(host.lastChild)
-        host.remove(host.lastChild);
-}
+// function clearHost(host) {
+//     while(host.lastChild)
+//         host.remove(host.lastChild);
+// }

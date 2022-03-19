@@ -24,6 +24,7 @@ namespace WebAPI.Controllers
 
         #region HttpPost
 
+        //FIXME: Ne koristi se, upotrebljeno samo za inicijalno pre rada sa bazom podataka!
         [Route("DodajTip")]
         [HttpPost]
         public async Task<ActionResult> DodajTip([FromBody] Tip tip) {
@@ -41,6 +42,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        //TODO: Koristi se!
         [Route("DodajHardver/{name}/{tip}/{info}/{price}/{image}")]
         [HttpPost]
         public async Task<ActionResult> DodajHardver(string name, int tip, string info, int price, string image) {
@@ -183,7 +185,7 @@ namespace WebAPI.Controllers
         }
 
 
-
+        //TODO: Koristi se!
         [Route("DodajRacunarNaPolicu/{storeId}/{computerId}")]
         [HttpPost]
         public async Task<ActionResult> DodajRacunarNaPolicu(int storeId = 0, int computerId = 0) {
@@ -241,8 +243,10 @@ namespace WebAPI.Controllers
 
         #endregion
 
+
         #region HttpGet
 
+        //TODO: Koristi se!
         [Route("VratiSavHardver")]
         [HttpGet]
         public ActionResult VratiSavHardver() {
@@ -252,6 +256,7 @@ namespace WebAPI.Controllers
                 return Ok(Context.Hardwares.ToList());
         }
 
+        //TODO: Koristi se!
         [Route("VratiSveTipove")]
         [HttpGet]
         public ActionResult VratiSveTipove() {
@@ -261,6 +266,7 @@ namespace WebAPI.Controllers
                 return Ok(Context.Types.ToList());
         }
 
+        //TODO: Koristi se!
         [Route("VratiSveOvogTipa/{tip}")]
         [HttpGet]
         public async Task<ActionResult> VratiSveOvogTipa(int tip = 0) {
@@ -287,6 +293,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        //TODO: Koristi se!
         [Route("VratiSveRacunare")]
         [EnableCors("CORS")]
         [HttpGet]
@@ -302,6 +309,8 @@ namespace WebAPI.Controllers
                 ////////////////////////////////////////
         }
 
+        //TODO: Koristi se!
+        //FIXME: Valjda? 
         [Route("VratiSveOOvomRacunaru/{name}")]
         [HttpGet]
         public ActionResult VratiSveOOvomRacunaru(string name) {
@@ -321,18 +330,14 @@ namespace WebAPI.Controllers
 
         //FIXME: Sad pa ovo ne radi, napravili smo za racunar, vidi ovo nekako prepravi
         //Ili mozemo da vratimo sav hardver pa da u js izvlacimo podatke? 
+        //FIXME: Popravljeno, sad radi!
+        //TODO: Koristi se!
         [Route("VratiKomponenteRacunara/{computerId}")]
         [HttpGet]
         public async Task<ActionResult> VratiKomponenteRacunara(int computerId = 0) {
             if(computerId == 0)
                 return BadRequest("Morate da izaberete racunar!");
             else {
-                // var comp = await Context.Computers
-                //                         .Where(p => p.ID == computerId)
-                //                         .Include(p => p.ComputerHardware)
-                //                         .ThenInclude(p => p.Hardware)
-                //                         .ThenInclude(p => p.HardwareName)
-                //                         .ToListAsync();
                 var comp = await Context.Contents
                                         .Include(p => p.Computer)
                                         .Include(p => p.Hardware)
@@ -356,6 +361,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        //TODO: Koristi se!
         [Route("VratiHardverOvogRacunara/{hardw}")]
         [HttpGet]
         public async Task<ActionResult> VratiHardverOvogRacunara(int hardw = 0) {
@@ -387,7 +393,7 @@ namespace WebAPI.Controllers
             }
         }
 
-        //Ovde sam dodao await i na kraju ToListAsync();
+        //TODO: Koristi se!
         [Route("VratiSveProdavnice")]
         [HttpGet]
         public async Task<ActionResult> VratiSveProdavnice() {
@@ -424,6 +430,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        //TODO: Koristi se!
         [Route("VratiSveRacunareProdavnice/{storeID}")]
         [HttpGet]
         public async Task<ActionResult> VratiSveRacunareProdavnice(int storeID) {
@@ -450,7 +457,6 @@ namespace WebAPI.Controllers
                                                     ComputerId = q.Computer.ID,
                                                     Image = q.Computer.Image
                                                     })
-
                             })
                         );
                     }
@@ -462,41 +468,8 @@ namespace WebAPI.Controllers
         }
 
 
-        // [Route("VratiListuSamoImenaKomponentaOvogRacunara/{name}")]
-        // [HttpGet]
-        // public async Task<ActionResult> VratiListuSamoImenaKomponentaOvogRacunara(string name) {
-        //     if(String.IsNullOrEmpty(name))
-        //         return BadRequest("Niste uneli ime racunara!");
-        //     else {
-        //         try {
-
-        //             var racunari = Context.Computers
-        //                                   .Include(p => p.ComputerHardware)
-        //                                   .ThenInclude(p => p.Hardware.HardwareName);
-
-        //             var lista = await racunari.ToListAsync();
-                    
-        //             return Ok(
-        //                 lista.Select(p =>
-        //                 new {
-        //                     Name = p.ComputerHardware
-        //                             .Where(q => q.Computer.ComputerName == name)
-        //                             .Select(q => 
-        //                                 new {
-        //                                     Ime = q.Hardware.HardwareName
-        //                                 }
-        //                             )
-        //                 }).ToList()
-        //             );
-
-        //         }
-        //         catch(Exception ex) {
-        //             return BadRequest(ex.Message);
-        //         }
-        //     }
-        // }
-
         //Ovde sam promenio await i ToListAsync()
+        //FIXME: Da li se koristi? 
         [Route("GdeMoguDaKupimOvajRacunar/{name}")]
         [HttpGet]
         public async Task<ActionResult> GdeMoguDaKupimOvajRacunar(string name) {
@@ -559,7 +532,8 @@ namespace WebAPI.Controllers
             }
         }
 
-        //Ovde sam promenio await i ToListAsync()
+        
+        //TODO: Koristi se!
         [Route("VratiZauzetostSvihProdavnica")]
         [HttpGet]
         public async Task<ActionResult> VratiZauzetostSvihProdavnica() {
@@ -614,6 +588,7 @@ namespace WebAPI.Controllers
 
         #region Delete
 
+        //TODO: Koristi se!
         [Route("UkloniHardverIzRacunara/{computer}/{hardware}")]
         [HttpDelete]
         public async Task<ActionResult> UkloniHardverIzRacunara(int computer = 0, int hardware = 0) {
@@ -647,13 +622,6 @@ namespace WebAPI.Controllers
                 catch(Exception ex) {
                     return BadRequest(ex.Message);
                 }
-
-                //     racunar.ComputerPrice = racunar.ComputerPrice - komponenta.HardwarePrice;
-                //     racunar.ComputerHardware.Remove(veza);
-                //     await Context.SaveChangesAsync();
-                //     return Ok($"Uklonjena komponenta: {komponenta.HardwareName} iz racunara: {racunar.ComputerName}");
-                // }
-
             }
         }
 

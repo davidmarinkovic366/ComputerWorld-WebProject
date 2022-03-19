@@ -9,30 +9,8 @@ export class Computer {
         this.computerImage = computerImage;
     }
 
-    //FIXME: Ovo je ostalo iz prethodnog projekta, mozes da obrises ako sve radi
-    // drawCard(host) {
-
-    //     const mainCard = document.createElement('div');
-    //     mainCard.classList.add('card-view-main');
-
-    //     let name = document.createElement('h2');
-    //     name.classList.add('card-view-header');
-    //     name.innerHTML = this.name;
-
-    //     let desc;
-    //     this.hardwareList.forEach( s => {
-    //         if(desc == null) {
-    //             desc = desc + s.name;
-    //         }
-    //     });
-
-    //     let description = document.createElement('h3');
-    //     description.classList.add('card-viev-description');
-    // }
-
     drawMyselfToCard(host) {
         let listaHardvera = [];
-        // console.log('Pozivamo vrati komponente racunara!' + this.id);
         
         fetch(`https://localhost:5001/ComputerStore/VratiKomponenteRacunara/${this.id}`, {
             method:"GET"
@@ -103,7 +81,8 @@ export class Computer {
     }
 
     drawAddToCart() {
-        //Hvatamo cart kontejner u koji crtamo 
+        //Hvatamo cart kontejner u koji crtamo;
+        //Mora querySelector zato sto crtam komponente na vise elementa na stranici;
         let deepCont = document.querySelector('.header-nav-cart-deep-container');
 
         //Ako prvi put dodajemo?
@@ -127,30 +106,30 @@ export class Computer {
     }
 
     drawSmallCard(host) {
-        //Kontejner kartice
+        //Kontejner kartice;
         let cardContainer = document.createElement('div');
         cardContainer.classList.add('header-nav-cart-item');
 
-        //Slika racunara
+        //Slika racunara;
         let image = document.createElement('img');
         image.classList.add('header-nav-cart-item-image');
         image.src = this.computerImage;
 
-        //Ime racunara
+        //Ime racunara;
         let title = document.createElement('h2');
         title.classList.add('header-nav-cart-item-name');
         title.innerHTML = this.name;
 
-        //Kontejner za cenu i za dugme za izbacivanje iz korpe
+        //Kontejner za cenu i za dugme za izbacivanje iz korpe;
         let subContainer = document.createElement('div');
         subContainer.classList.add('header-nav-cart-item-subcontainer');
 
-        //Cena racunara
+        //Cena racunara;
         let price = document.createElement('label');
         price.classList.add('header-nav-cart-item-price');
         price.innerHTML = this.price + '<i class="ri-coins-line"></i>';
 
-        //Dugme za brisanje 
+        //Dugme za brisanje; 
         let button = document.createElement('button');
         button.classList.add('header-nav-cart-item-remove');
         button.innerHTML = 'Remove' + '<i class="ri-delete-bin-line"></i>';
@@ -158,15 +137,15 @@ export class Computer {
         subContainer.appendChild(price);
         subContainer.appendChild(button);
 
-        //Dodavanje na glavni kontejner kartice
+        //Dodavanje na glavni kontejner kartice;
         cardContainer.appendChild(image);
         cardContainer.appendChild(title);
         cardContainer.appendChild(subContainer);
 
-        //Dodavanje na cart kontejner
+        //Dodavanje na cart kontejner;
         host.prepend(cardContainer);
 
-        //Event za brisanje iz korpe 
+        //Event za brisanje iz korpe ;
         button.addEventListener('click', () => {
             while(cardContainer.firstChild)
                 cardContainer.removeChild(cardContainer.lastChild);
