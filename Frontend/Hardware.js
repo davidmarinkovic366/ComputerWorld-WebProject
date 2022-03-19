@@ -9,41 +9,43 @@ export class Hardware {
         this.hardwareImage = hardwareImage;
     }
 
+    //Ustvari je crtanje slike komponente na main-container:
     drawImageToExistingImage(host, data) {
         host.src = this.hardwareImage;
         data.innerHTML = this.info;
     }
 
     drawHardwareToCard(host) {
-        //Hardware card
+
+        //Kontejner kartice hardvera;
         let cardContainer = document.createElement('div');
         cardContainer.classList.add('main-card-item');
 
-        //Slika hardvera
+        //Slika hardvera;
         let image = document.createElement('img');
         image.classList.add('main-card-item-image');
         image.src = this.hardwareImage;
 
-        //Naziv komponente/racunara
+        //Naziv komponente/racunara;
         let title = document.createElement('h2');
         title.classList.add('main-card-item-title');
         title.innerHTML = this.name;
 
-        //Opis racunara/komponente
+        //Opis racunara/komponente;
         let desc = document.createElement('h4');
         desc.classList.add('main-card-item-description');
         desc.innerHTML = this.info;
 
-        //Container for price and button
+        //Kontejner cenu i dugme;
         let subContainer = document.createElement('div');
         subContainer.classList.add('main-card-sub-container');
 
-        //Computer price
+        //Cena hardvera;
         let price = document.createElement('label');
         price.classList.add('main-card-item-price');
         price.innerHTML = this.price + '<i class="ri-coins-line"></i>';
 
-        //Button for adding to cart!
+        //Dugme za dodavanje hardvera u cart meni;
         let button = document.createElement('button');
         button.classList.add('main-card-item-add-to-cart');
         button.innerHTML = 'Add' + '<i class="fa-solid fa-cart-arrow-down"></i>';
@@ -51,6 +53,7 @@ export class Hardware {
         subContainer.appendChild(price);
         subContainer.appendChild(button);
 
+        //Dodavanje komponenta na karticu;
         cardContainer.appendChild(image);
         cardContainer.appendChild(title);
         cardContainer.appendChild(desc);
@@ -58,6 +61,7 @@ export class Hardware {
 
         host.appendChild(cardContainer);
 
+        //Event za dodavanje kartice na cart meni;
         button.addEventListener('click', () => {
             this.drawToCart()
         })
@@ -130,41 +134,41 @@ export class Hardware {
             let deepContainer = document.createElement('div');
             deepContainer.classList.add('header-nav-cart-deep-container');
             cart.appendChild(deepContainer);
-            // cart.appendChild(confirmBtn);
 
             this.drawSmallCard(deepContainer);
 
         }
         else {  //Inace samo dodajemo karticu
-
             this.drawSmallCard(deepCont);
+
         }
     }
 
     drawSmallCard(host) {
+        //Kontejner za karticu unutar cart meni-ja;
         let cardContainer = document.createElement('div');
         cardContainer.classList.add('header-nav-cart-item');
 
-        //Card image
+        //Slika komponente;
         let image = document.createElement('img');
         image.classList.add('header-nav-cart-item-image');
         image.src = this.hardwareImage;
 
-        //Component name
+        //Ime komponente;
         let title = document.createElement('h2');
         title.classList.add('header-nav-cart-item-name');
         title.innerHTML = this.name;
 
-        //Subcontainer for price and remove btn
+        //Kontejner za cenu i dugme;
         let subContainer = document.createElement('div');
         subContainer.classList.add('header-nav-cart-item-subcontainer');
 
-        //Computer price
+        //Cena komponente;
         let price = document.createElement('label');
         price.classList.add('header-nav-cart-item-price');
         price.innerHTML = this.price + '<i class="ri-coins-line"></i>';
 
-        //Remove btn
+        //Dugme za uklanjanje kartice komponente iz cart meni-ja;
         let button = document.createElement('button');
         button.classList.add('header-nav-cart-item-remove');
         button.innerHTML = 'Remove' + '<i class="ri-delete-bin-line"></i>';
@@ -172,14 +176,15 @@ export class Hardware {
         subContainer.appendChild(price);
         subContainer.appendChild(button);
 
-        //Adding items to small card
+        //Dodavanja komponenta na karticu
         cardContainer.appendChild(image);
         cardContainer.appendChild(title);
         cardContainer.appendChild(subContainer);
 
-        //Adding card to cart container
+        //Dodavanje kartice na cart meni;
         host.prepend(cardContainer);
 
+        //Event za brisanje kartice iz cart meni-ja;
         button.addEventListener('click', () => {
             while(cardContainer.firstChild)
                 cardContainer.removeChild(cardContainer.lastChild);

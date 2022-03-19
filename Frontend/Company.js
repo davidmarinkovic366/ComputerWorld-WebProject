@@ -12,9 +12,8 @@ export class Company {
         this.container = null;
     }
 
-    //FIXME: First options lists inside left menu(host/subMenu selector!) 
+    //Metoda ca popunjavanje metoda dostupnih korisnicima 
     drawCompanyFunctionsMenu(host) {
-        
         this.clearLeftMenu();
 
         let list = ['Stores', 'Computers', 'Hardware'];
@@ -33,26 +32,17 @@ export class Company {
         
         for(let i = 0; i < list.length; i++) {
 
-            //Tekst linka
+            //Tekst naslova
             let link = document.createElement('a');
             link.classList.add('header-nav-sub-item');
             link.innerHTML = list[i] + '<i class="ri-arrow-down-s-line"></i>';
 
-            //FIXME: Mozes da obrises ako lepo napravis za header-nav-sub-item da je centrirano
-            //Slika strelice na dole
-            // let linkButton = document.createElement('span');
-            // linkButton.classList.add('header-nav-sub-item-arrow');
-            // linkButton.innerHTML = '<i class="ri-arrow-down-s-line"></i>';
-
-            //Kontejner za tekst i strelicu
-            //Promenio sam da je 'a' umesto div, ako pravi problem vrati!
-            //FIXME:
+            //Kontejner za naslov
             let smallLink = document.createElement('a');
             smallLink.classList.add('header-nav-sub-items-small-link');
 
-            //Dodavanje teksta i strelice u kontejner
+            //Dodavanje naslova na kontejner
             smallLink.appendChild(link);
-            // smallLink.appendChild(linkButton);
 
             //Kontejner za ovaj link i za dropdown listu
             let smallNavDiv = document.createElement('div');
@@ -62,6 +52,7 @@ export class Company {
             smallNavDiv.appendChild(smallLink);
             smallNavDiv.addEventListener('click', () => {
 
+                //Da bi se oni koji su prethodno bili otvoreni zatvorili na klik nekog drugog;
                 let openLists = document.querySelectorAll('.header-nav-sub-items-small-div');
                 openLists.forEach(p => {
                     if(p !== smallNavDiv)
@@ -69,6 +60,7 @@ export class Company {
                             p.classList.remove('header-nav-sub-items-small-div-clicked');
                 });
 
+                //Za otvaranje i zatvaranje jednog istog;
                 if(smallNavDiv.classList.contains('header-nav-sub-items-small-div-clicked'))
                     smallNavDiv.classList.remove('header-nav-sub-items-small-div-clicked');
                 else
@@ -77,14 +69,13 @@ export class Company {
 
             });
 
-            //Dodavanje dropdown liste
+            //Dodavanje dropdown liste - selectora za metode
             let dropDownMenuItemList = document.createElement('div');
             dropDownMenuItemList.classList.add('header-nav-sub-sub-items-div');
 
             //Dodavanje jos jednog diva kao kontejner za sve linkove!
             let dropDownMenuItemListContainer = document.createElement('div');
             dropDownMenuItemListContainer.classList.add('header-nav-sub-sub-items-div-container');
-            // dropDownMenuItemListContainer.innerHTML = 'proba1223';
 
             //Dodavanje kontejnera za upravljanje drop-down liste na originalni
             //koji treba da se pojavi samo na poziv
@@ -94,8 +85,8 @@ export class Company {
             smallNavDiv.appendChild(dropDownMenuItemList);
 
             //TODO: Dodavanje sadrzaja samih dropdown listi:
-
             for(let j = 0;  j < bigList[i].length; j++) {
+                
                 //Link
                 let dropDownMenuItem = document.createElement('a');
                 dropDownMenuItem.classList.add('header-nav-drop-down-item');
@@ -111,49 +102,52 @@ export class Company {
             
             }
 
-            // menuItemsContainer.appendChild(smallLink);
             menuItemsContainer.appendChild(smallNavDiv);
             selectList.push(smallLink);
         }
 
-        //TODO: adding events to links in left menu:
-        //TODO: Store method functions: 
+        //TODO: adding events to links in left menu;
+        //TODO: Store method functions;
 
-        //Add store to database function:
-        //Radi, gotovo!
+        //Dodavanje prodavnice u bazu podataka;
         selectSubList[0].addEventListener('click', () => {
-            console.log('Add store to database function');
+
             this.closeLeftMenu();
             this.clearAndRemove();
 
-            //Container for drawing stuff on page
+            //Kontejner za crtanje;
             let mainContainer = document.createElement('div');
             mainContainer.classList.add('main-container-div');
 
+            //Dodavanje kontejnera za crtanje na main;
             this.container.appendChild(mainContainer);
 
-            //Container for all input elements
+            //Kontejner za sve input elemente, dodajem ga zato sto je vec stilizovan;
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
 
             mainContainer.appendChild(inputContainerDiv);
 
+            //Selektori input elementa;
             let inputList = [];
 
             let labelList = ['Store Name:', 'Store Address:', 'Shelf count:'];
             for(let i = 0; i < labelList.length; i++) {
-                /*<div>
+                /*<div class="small-input-div">
                     <label> </label>
                     <input> </input>
                 </div> */
+
+                //Kontejner za jednu labelu i jedan input element;
                 let smallInputContainer = document.createElement('div');
                 smallInputContainer.classList.add('small-input-div');
 
+                //Labela;
                 let label = document.createElement('label');
-                // label.classList.add('simple-input-label');
                 label.classList.add('simple-label');
                 label.innerHTML = labelList[i];
 
+                //Input element;
                 let inputEl = document.createElement('input');
                 if( i === 2)
                     inputEl.type = 'number';
@@ -163,14 +157,15 @@ export class Company {
 
                 inputList.push(inputEl);
 
-                //Adding elements in sub-container
+                //Dodavanje labele i input elementa na mali kontejner;
                 smallInputContainer.appendChild(label);
                 smallInputContainer.appendChild(inputEl);
 
-                //Adding sub-container to main container
+                //Dodavanje malog kontejnera na veci;
                 inputContainerDiv.appendChild(smallInputContainer);
             }
 
+            //Dugme za aktiviranje eventa;
             let button = document.createElement('button');
             button.classList.add('simple-button');
             button.innerHTML = 'Add' + '<i class="ri-add-fill"></i>';
@@ -178,32 +173,24 @@ export class Company {
             mainContainer.appendChild(button);
 
             button.addEventListener('click', () => {
-                console.log(`Uneta je prodavnica: ${inputList[0].value}.`);
-                console.log(`Prodavnica se nalazi na adresi: ${inputList[1].value}.`);
-                console.log(`Prodavnica ima: ${inputList[2].value} polica za racunare!`);
-                
-                //FIXME: Samo odkomentarisi, radi kako treba!
+
                 //Provere da li je sve uneseno se desavaju na backend-u!
-                // fetch(`https://localhost:5001/ComputerStore/DodajProdavnicu/${inputList[0].value}/${inputList[1].value}/${inputList[2].value}`,{
-                //     method:"POST"
-                // });
+                fetch(`https://localhost:5001/ComputerStore/DodajProdavnicu/${inputList[0].value}/${inputList[1].value}/${inputList[2].value}`,{
+                    method:"POST"
+                });
                 
+                //Za ciscenje svih input elementa nakon 
                 inputList.forEach(e => {
                     e.value = '';
                 });
-                console.log('Dodato!');
+                alert('Nova prodavnica je dodata!');
                 
             });
 
         });
 
-        //FIXME: Add computer to store:
-        //Dodajemo nesto sto postoji na nesto sto vec postoji, nema
-        //potrebe da updejtujemo podatke, osim za prodavnice, 
-        //mada, mozda bi i trebalo ako pretrazujemo veze? 
-        //A mozemo i po vezama da pretrazujemo, bmk.
+        //Funkcija za dodavanje racunara u prodavnicu;
         selectSubList[1].addEventListener('click', () => {
-            console.log('Add computer to store');
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -218,62 +205,105 @@ export class Company {
 
             let labelList = ['Computer:', 'Store:'];
 
+            //Lista selektora;
             let selectList = [];
 
-
-
             for(let i = 0; i < labelList.length; i++) {
+                //Kontejner za labelu i select element;
                 let smallInputContainer = document.createElement('div');
                 smallInputContainer.classList.add('small-input-div');
 
+                //Labela;
                 let label = document.createElement('label');
-                // label.classList.add('simple-input-label');
                 label.classList.add('simple-label');
                 label.innerHTML = labelList[i];
 
-                let inputEl = document.createElement('select');
-                inputEl.classList.add('simple-input-list');
+                //Select element
+                let selectEl = document.createElement('select');
+                selectEl.classList.add('simple-input-list');
 
-                selectList.push(inputEl);
+                //Dodavanje selektora za select element na listu
+                selectList.push(selectEl);
 
-                //Adding elements in sub-container
+                //Dodavanje sadrzaja na mali kontejner
                 smallInputContainer.appendChild(label);
-                smallInputContainer.appendChild(inputEl);
+                smallInputContainer.appendChild(selectEl);
 
-                //Adding sub-container to main container
+                //Dodavanje malog kontejnera na veliki
                 inputContainerDiv.appendChild(smallInputContainer);
             }
 
-            this.computerList.forEach(c => {
-                let opt = document.createElement('option');
-                opt.value = c.id;
-                opt.text = c.name;
-                selectList[0].appendChild(opt);
-            });
+            let computersList = [];
+            fetch(`https://localhost:5001/ComputerStore/VratiSveRacunare`, {
+                method:"GET"
+            }).then(p => {
+                p.json().then(computers => {
+                    computers.forEach(computer => {
+                        let comp = new Computer(computer.id, computer.computerName, computer.computerPrice, computer.computerHardware, computer.image);
+                        computersList.push(comp);   
+                    })
+                    computersList.forEach(c => {
+                        let opt = document.createElement('option');
+                        opt.value = c.id;
+                        opt.text = c.name;
+                        selectList[0].appendChild(opt);
+                    });
 
-            this.storeList.forEach(s => {
-                let opt = document.createElement('option');
-                opt.value = s.id;
-                opt.text = s.name;
-                selectList[1].appendChild(opt);
-            }); 
+                    let storesList = [];
+                    fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
+                        method:"GET"
+                    }).then(p => {
+                        p.json().then(stores => {
+                            stores.forEach(store => {
+                                let str = new Store(store.storeID, store.storeName, store.storeAddress, store.shelfSize, store.racunari);
+                                storesList.push(str);
+                            })
 
+                            storesList.forEach(s => {
+                                let opt = document.createElement('option');
+                                opt.value = s.id;
+                                opt.text = s.name;
+                                selectList[1].appendChild(opt);
+                            });
+                        })
+                    })
+                })
+            })
+
+            //Dugme za dodavanje eventa;
             let button = document.createElement('button');
             button.classList.add('simple-button');
             button.innerHTML = 'Append' + '<i class="ri-add-fill"></i>';
 
+            //Dodavanje dugmeta na kontejner;
             mainContainer.appendChild(button);
 
+            //Event za dugme;
             button.addEventListener('click', () => {
-                console.log(`Prodavnica: ${this.storeList[selectList[1].selectedIndex].name} & ${this.storeList[selectList[1].selectedIndex].id}`);
-                console.log(`Racunar: ${this.computerList[selectList[0].selectedIndex].name} & ${this.computerList[selectList[0].selectedIndex].id}`);
+                console.log(`Prodavnica: ${selectList[1].options[selectList[1].selectedIndex].value}`);
+                console.log(`Racunar: ${selectList[0].options[selectList[0].selectedIndex].value}`);
+                fetch(`https://localhost:5001/ComputerStore/DodajRacunarNaPolicu/${selectList[1].options[selectList[1].selectedIndex].value}/${selectList[0].options[selectList[0].selectedIndex].value}`, {
+                    method:"POST"
+                }).then(p => {
+                    if(p.ok) {
+                        p.text().then(function (text) {
+                            alert('Uspesno! ' + text); 
+                        });
+                    }
+                    else {
+                        p.text().then(function (text) {
+                            alert('Greska! ' + text); 
+                        });
+                    }
+                });
+
             });
 
         });
 
-        //FIXME: Show all stores with locations:
+        //Funkcija za prikaz svih instanci prodavnica u bazi podataka:
         selectSubList[2].addEventListener('click', () => {
-            console.log('Show all stores with locations');
+
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -282,97 +312,35 @@ export class Company {
             this.container.appendChild(mainContainer);
 
             //Container for chosing store by name and button to confirm
-            let inputContainerDiv = document.createElement('div');
-            inputContainerDiv.classList.add('input-container-div');
+            let cont = document.createElement('div');
+            cont.classList.add('main-container-occupancy');
+            mainContainer.appendChild(cont);
 
-            //Appending to body
-            mainContainer.appendChild(inputContainerDiv);
+            let storesList = [];
 
-            let selectList = document.createElement('select');
-            selectList.classList.add('simple-input-list');
-
-            this.storeList.forEach(store => {
-                let opt = document.createElement('option');
-                opt.value = store.id;
-                opt.text = store.name;
-                selectList.appendChild(opt);
-            });
-
-            //Adding select list to body
-            inputContainerDiv.appendChild(selectList);
-            
-            let button = document.createElement('button');
-            button.classList.add('simple-button');
-            button.innerHTML = 'Check' + '<i class="ri-question-mark"></i>';
-
-            inputContainerDiv.appendChild(button);
-
-            button.addEventListener('click', () => {
-
-                this.clearAndDelete(document.querySelector('.display-store-container'))
-
-                //Id of selected store in list
-                let storeId = this.storeList[selectList.selectedIndex].id;
-                console.log(storeId);
-                //For displaying store info and all computers inside chosen store
-                let displayStore = document.createElement('div');
-                displayStore.classList.add('display-store-container');
-
-                mainContainer.appendChild(displayStore);
-
-                //Chosing store by uniqueId in this.storeList
-                let chosenStore;
-                this.storeList.forEach( el => {
-                    if(el.id == storeId)
-                        chosenStore = el;
-                });
-
-                // console.log(chosenStore);
-
-                //Container for address!
-                let addr = document.createElement('h3');
-                addr.classList.add('simple-info-label');
-                addr.innerHTML = 'Address: ' + chosenStore.address;
-
-                displayStore.appendChild(addr);
-
-                let displayData = document.createElement('div');
-                displayData.classList.add('display-store-container-data');
-                
-                //Popravljeno, ne mozemo odjednom da vratimo 2 objekta iz nekog
-                //Razloga, iako sam siguran da nije dubina veca od 3, a kamo li
-                //32, al ajde
-                //FIXME: Popravljeno malo sutra, iz nekog razloga lepo mi stampa
-                //vrednosti na konzolu kao niz, ali ne kao i pojedninacne..
-
-                let newComputerList = [];
-                fetch(`https://localhost:5001/ComputerStore/VratiSveRacunareProdavnice/${storeId}`, {
-                    method:"GET"
-                })
-                .then(p => {
-                    p.json().then(computers => {
-                        computers.forEach(computer => {
-                            // console.log(prodavnica);
-                            computer.racunari.forEach(s => {
-                                let comp = new Computer(s.computerId, s.computerName, s.computerPrice, null, s.image);
-                                // comp.drawMyselfToCard()
-                            })
-                            // comp.name = computer.computerName;
-
-                            
-                            //For drawing data to info part of this method!
-                            // comp.drawMyselfToStoreInfo(displayData);
+            fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
+                method:"GET"
+            }).then(p => {
+                if(p.ok) {
+                    p.json().then(stores => {
+                        stores.forEach(store => {
+                            let str = new Store(store.storeID, store.storeName, store.storeAddress, store.shelfSize, store.racunari);
+                            storesList.push(str);
+                        })
+                        storesList.forEach(s => {
+                            s.drawMyInfo(cont);
                         })
                     })
-                })
-            })
-
-
-
+                }
+                else {
+                    p.text().then(function (text) {
+                        alert('Greska! ' + text); 
+                    });
+                }
+            });
         });
 
-        //FIXME: Show occupancy:
-        //Sve radi, sve ok
+        //Funkcija prikazi zauzetost:
         selectSubList[3].addEventListener('click', () => {
             console.log('Show occupancy');
             this.closeLeftMenu();
@@ -382,11 +350,10 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
+            //Kontejner na koji crtamo zauzetost;
             let cont = document.createElement('div');
             cont.classList.add('main-container-occupancy');
             mainContainer.appendChild(cont);
-
-            //FIXME: Mozda cu morati da sve dodam na .input-container-div
 
             //Draw yourself to body!
             this.storeList.forEach(q => {
@@ -395,7 +362,9 @@ export class Company {
 
         });
 
-        //FIXME: Pazi sad, ovo dugacko zeznuto
+        //Funkcija za prikaz svih racunara odredjene prodavnice;
+        //Ne crtamo i hardver zato sto racunamo da je sav hadver dostupan u svim
+        //Prodavnicama, a samo su racunari jedinstveni za svaku prodavnicu posebno;
         selectSubList[4].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -416,7 +385,7 @@ export class Company {
             inputContainer.classList.add('input-container-div');
             deepContainer.appendChild(inputContainer);
 
-            //Container za listu prodavnica i labelu
+            //Kontejner za listu prodavnica i labelu
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('small-input-div');
             inputContainer.appendChild(inputContainerDiv);
@@ -452,10 +421,7 @@ export class Company {
             browseContainer.classList.add('big-screen-bit-smaller-cards');
             deepContainer.appendChild(browseContainer);
 
-
-            //FIXME: Proveri za racunare sa back-end-a da dobijes podatke, 
-            //sakako mozes i odavde sa this.storeList[i].computerList da izuces,
-            //ali mozda i to bude zeznuto!
+            //
             button.addEventListener('click', () => {
 
                 //Za ciscenje podataka iz prethodno pretrazene prodavnice!
@@ -464,8 +430,6 @@ export class Company {
                     browseContainer.removeChild(browseContainer.lastChild);
 
                 //TODO: Ovo radi, vraca ID izabrane prodavnice
-                //Ajde da probam iz ovih listi, pa kako bude!
-                //Lista prodavnica sadrzi i listu svih racunara i njihove id-jeve
                 let chosenStore = list[list.selectedIndex].value;
                 let storePtr;
 
@@ -483,17 +447,16 @@ export class Company {
                                 newComputerList.push(comp);
                             })
                         })
-                        console.log(newComputerList);
+                        //Crtamo sve racunare ove prodavnice na browseContainer
                         newComputerList.forEach(s => {
                             s.drawMyselfToCard(browseContainer);
                         })
                     })
                 })
-
             });
-
         });
 
+        //Funkcija za dodavanje novog racunara;
         selectSubList[5].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -502,37 +465,31 @@ export class Company {
             mainContainer.classList.add('main-container-div');
             this.container.appendChild(mainContainer);
 
-            //Container for chosing store by name and button to confirm
+            //Kontejner za sve input elemente
             let inputContainerDiv = document.createElement('div');
             inputContainerDiv.classList.add('input-container-div');
 
-            //Appending to body
             mainContainer.appendChild(inputContainerDiv);
 
-            //Label & Input line
-            // let smallInputContainer = document.createElement('div');
-            // smallInputContainer.classList.add('small-input-div');
-
-            // inputContainerDiv.appendChild(smallInputContainer);
-
+            //Selektori za input elemente 
             let selectList = [];
             let labelList = ['Name:', 'Image:'];
             for(let i = 0; i < labelList.length; i++) {
                 
-                //Label & Input line
+                //Kontejner za labelu & input element
                 let smallInputContainer = document.createElement('div');
                 smallInputContainer.classList.add('small-input-div');
     
                 inputContainerDiv.appendChild(smallInputContainer);
 
-                //Label
+                //Labela
                 let label = document.createElement('label');
                 label.classList.add('simple-label');
                 label.innerHTML = labelList[i];
 
                 smallInputContainer.appendChild(label);
 
-                //Input
+                //Input element
                 let inputEl = document.createElement('input');
                 inputEl.type = 'text';
                 inputEl.classList.add('input-element');
@@ -541,21 +498,8 @@ export class Company {
 
                 selectList.push(inputEl);
             }
-            // //Label
-            // let label = document.createElement('label');
-            // label.classList.add('simple-label');
-            // label.innerHTML = 'Name of new computer:';
 
-            // smallInputContainer.appendChild(label);
-
-            // //Input
-            // let inputEl = document.createElement('input');
-            // inputEl.type = 'text';
-            // inputEl.classList.add('input-element');
-
-            // smallInputContainer.appendChild(inputEl);
-
-            //Button
+            //Dugme za potvrdu dodavanja novog racunara u bazu podataka
             let button = document.createElement('button');
             button.classList.add('simple-button');
             button.innerHTML = 'Add' + '<i class="ri-add-fill"></i>';
@@ -563,14 +507,24 @@ export class Company {
             mainContainer.appendChild(button);
 
             button.addEventListener('click', () => {
-                // console.log('NAme' + selectList[0].value);
-                // console.log('Image' + selectList[1].value);
+                // console.log('Name: ' + selectList[0].value);
+                // console.log('Image: ' + selectList[1].value);
                 // console.log('../Images/Computer/RAZER R1 EDITION.png')
 
                 //FIXME: Popravi, nesto ne radi oko slanja podataka, pogledaj i backend za svaki slucaj!
-                // fetch(`https://localhost:5001/ComputerStore/DodajRacunar/${selectList[0].value}/${selectList[1].value}`,{
-                //     method:"POST"
-                // });
+                fetch(`https://localhost:5001/ComputerStore/DodajRacunar/${selectList[0].value}/${selectList[1].value}`,{
+                    method:"POST"
+                }).then(p => {
+                    if(!p.ok) {
+                        //Ako je doslo do greske, odstampaj vracenu poruku;
+                        p.text().then(function (text) {
+                            alert('Greska: ' + text); 
+                        });
+                    }
+                    else {
+                        alert('Uspesno smo dodali racunar u bazu podataka!');
+                    }
+                })
             });
         });
 

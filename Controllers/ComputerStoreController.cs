@@ -74,26 +74,44 @@ namespace WebAPI.Controllers
             }
         }
 
+        //TODO: Koristi se!
         [Route("DodajRacunar/{name}/{image}")]
         [HttpPost]
         public async Task<ActionResult> DodajRacunar(string name, string image) {
             if(String.IsNullOrEmpty(name) || String.IsNullOrEmpty(image))
-                return BadRequest("Niste uneli ime racunara!");
+                return BadRequest("Niste uneli sve podatke!");
             else {
-                Computer cmp = new Computer();
-                cmp.ComputerName = name;
-                cmp.Image = image;
-                try {
-                    Context.Computers.Add(cmp);
-                    await Context.SaveChangesAsync();
-                    return Ok($"Dodat je racunar sa imenom: {cmp.ComputerName} sa id-jem: {cmp.ID} i slikom: {cmp.Image}");
+
+                var comp = await Context.Computers
+                                        .Where(p => p.ComputerName == name)
+                                        .FirstOrDefaultAsync();
+                
+                if(comp != null) {
+                    return BadRequest("Racunara sa datim imenom vec postoji u bazi podataka!");
                 }
-                catch(Exception ex) {
-                    return BadRequest(ex.Message);
+                else {
+
+                    String pom = "../Images/Computer/";
+                    pom += image;
+                    pom += ".png";
+
+                    Computer cmp = new Computer();
+                    cmp.ComputerName = name;
+                    cmp.Image = pom;
+
+                    try {
+                        Context.Computers.Add(cmp);
+                        await Context.SaveChangesAsync();
+                        return Ok("Uspesno smo dodali racunar u bazu podataka!");
+                    }
+                    catch(Exception ex) {
+                        return BadRequest(ex.Message);
+                    }
                 }
             }
         }
 
+        //TODO: Koristi se! 
         [Route("DodajKomponentuRacunaru/{rac}/{hrdw}")]
         [HttpPost]
         public async Task<ActionResult> DodajKomponentuRacunaru(int rac = 0, int hrdw = 0) {
@@ -113,15 +131,12 @@ namespace WebAPI.Controllers
                         c.Hardware = hardver;
                     
                         Context.Contents.Add(c);
-                        // await Context.SaveChangesAsync();
 
                         racunar.ComputerHardware.Add(c);
                         racunar.ComputerPrice += hardver.HardwarePrice;
                         await Context.SaveChangesAsync();
 
-                        return Ok(/*Context.Computers.Where(p => p.ID == racunar.ID).FirstOrDefault()*/
-                        racunar);
-
+                        return Ok(racunar);
                     }
                 }
                 catch(Exception ex) {
@@ -130,6 +145,7 @@ namespace WebAPI.Controllers
             }
         }
 
+        //TODO: Koristi se!
         [Route("DodajProdavnicu/{name}/{address}/{shelfSize}")]
         [HttpPost]
         public async Task<ActionResult> DodajProdavnicu(string name, string address, int shelfSize) {
@@ -166,89 +182,48 @@ namespace WebAPI.Controllers
             }
         }
 
-        // [Route("DodajRacunarNaPolicu/{store}/{computer}")]
-        // [HttpPost]
-        // public async Task<ActionResult> DodajRacunarNaPolicu(string store, string computer) {
-        //     if(String.IsNullOrEmpty(store) || String.IsNullOrEmpty(computer))
-        //         return BadRequest("Lose ste uneli podatke o racunaru i prodavnici!");
-        //     else {
-        //         if(Context.Stores == null || Context.Computers == null)
-        //             return BadRequest("U bazi ne postoji ni jedan racunar ili prodavnica, a mozda i oba?");
-        //         else {
-        //             var comp = Context.Computers.Where(p => p.ComputerName == computer).FirstOrDefault();
-        //             var stor = Context.Stores.Where(p => p.StoreName == store).FirstOrDefault();
-        //             if(comp == null || stor == null)
-        //                 return BadRequest("Trazeni racunar ili prodavnica ne postoje u bazi podataka, molimo proverite unesene podatke!");
-        //             else {
-        //                 bool provera = false;
-        //                 if(stor.StoreComputer != null) {
-        //                     var listaRacunara = stor.StoreComputer.ToList();
-        //                     foreach(Shelf s in listaRacunara) {
-        //                         if(s.Computer == comp)
-        //                             provera = true;
-        //                     }
-        //                 }
-        //                 /*Proveravamo da li ovaj racunar vec postoji u listi racunara koji se nalaze u ovoj prodavnici?*/
-        //                 if(provera)
-        //                     return BadRequest("Racunar se vec nalazi u ovoj prodavnici!");
-        //                 else {
-        //                     try {
-        //                         Shelf sh = new Shelf();
-        //                         sh.Computer = comp;
-        //                         sh.Store = stor;
 
-        //                         comp.ComputerStore.Add(sh);
-        //                         stor.StoreComputer.Add(sh);
-        //                         await Context.SaveChangesAsync();
-        //                         return Ok("Dodato!");
-        //                     }
-        //                     catch(Exception ex) {
-        //                         return BadRequest(comp.ComputerStore);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
 
-        [Route("DodajRacunarNaPolicu/{store}/{computer}")]
+        [Route("DodajRacunarNaPolicu/{storeId}/{computerId}")]
         [HttpPost]
-        public async Task<ActionResult> DodajRacunarNaPolicu(string store, string computer) {
-            if(String.IsNullOrEmpty(store) || String.IsNullOrEmpty(computer))
-                return BadRequest("Lose ste uneli podatke o racunaru i prodavnici!");
+        public async Task<ActionResult> DodajRacunarNaPolicu(int storeId = 0, int computerId = 0) {
+            if(storeId <= 0 || computerId <= 0)
+                return BadRequest("Uneli ste nevalide podatke!");
             else {
                 if(Context.Stores == null || Context.Computers == null)
                     return BadRequest("U bazi ne postoji ni jedan racunar ili prodavnica, a mozda i oba?");
                 else {
-                    var listaProdavnica = Context.Stores
-                                                 .Include(p => p.StoreComputer)
-                                                 .ThenInclude(p => p.Computer);
-                    var listaRacunara = Context.Computers
-                                                 .Include(p => p.ComputerStore)
-                                                 .ThenInclude(p => p.Store);
-                    var str = listaProdavnica.Where(p => p.StoreName == store).FirstOrDefault();
-                    var comp = listaRacunara.Where(p => p.ComputerName == computer).FirstOrDefault();
-                    if(str == null || comp == null)
-                        return BadRequest("Navedeni racunar ili prodavnica se ne nalaze u nasoj bazi podataka!");
+                    Store prodavnica = await Context.Stores
+                                            .Where(p => p.ID == storeId)
+                                            .FirstOrDefaultAsync();
+
+                    Computer racunar = await Context.Computers
+                                         .Where(p => p.ID == computerId)
+                                         .FirstOrDefaultAsync();
+
+                    if(prodavnica == null || racunar == null)
+                        return BadRequest("Navedeni racunar ili prodavnica se ne nalaze u bazi podataka!");
                     else {
-                        bool provera = false;
-                        foreach(Shelf s in str.StoreComputer) {
-                            if(s.Computer == comp) {
-                                provera = true;
-                                break;
-                            }
-                        }
-                        if(provera)
+                        //Ako nadjemo taj racunar u toj prodavnici, ne dodajemo ga ponovo!
+                        var provera = await Context.Shelfs
+                                                .Include(p => p.Computer)
+                                                .Include(p => p.Store)
+                                                .Where(p => p.Store.ID == storeId)
+                                                .Where(p => p.Computer.ID == computerId)
+                                                .FirstOrDefaultAsync();
+                        
+                        if(provera != null)
                             return BadRequest("Navedeni racunar se vec nalazi u prodavnici!");
                         else {
                             try {
                                 Shelf sh = new Shelf();
-                                sh.Computer = comp;
-                                sh.Store = str;
+                                sh.Computer = racunar;
+                                sh.Store = prodavnica;
 
-                                comp.ComputerStore.Add(sh);
-                                str.StoreComputer.Add(sh);
+                                racunar.ComputerStore.Add(sh);
+                                prodavnica.StoreComputer.Add(sh);
                                 await Context.SaveChangesAsync();
+                                
                                 return Ok("Uspesno smo dodali racunar u prodavnicu!");
                             }
                             catch(Exception ex) {

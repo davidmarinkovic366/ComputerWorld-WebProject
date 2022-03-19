@@ -3,7 +3,7 @@ import { Computer } from './Computer.js';
 import { Hardware } from './Hardware.js';
 import { Company } from './Company.js';
 
-//////////TODO:<Fetch>TODO:
+//TODO:<Fetch>TODO:
 let storeList = [];
 fetch("https://localhost:5001/ComputerStore/VratiSveProdavnice")
     .then(p => {
@@ -15,8 +15,8 @@ fetch("https://localhost:5001/ComputerStore/VratiSveProdavnice")
             })
         })
     })
-console.log("Lista prodavnica: ");
-console.log(storeList);
+// console.log("Lista prodavnica: ");
+// console.log(storeList);
 
 let computerList = [];
 fetch("https://localhost:5001/ComputerStore/VratiSveRacunare")
@@ -28,8 +28,8 @@ fetch("https://localhost:5001/ComputerStore/VratiSveRacunare")
             })
         })
     });
-console.log("Lista racunara: ");
-console.log(computerList);
+// console.log("Lista racunara: ");
+// console.log(computerList);
 
 let hardwareList = [];
 fetch("https://localhost:5001/ComputerStore/VratiSavHardver")
@@ -41,29 +41,25 @@ fetch("https://localhost:5001/ComputerStore/VratiSavHardver")
             });
         })
     })
-console.log("Lista hardvera: ");
-console.log(hardwareList);
-
+// console.log("Lista hardvera: ");
+// console.log(hardwareList);
 
 let comp = new Company('ComputerWorld', storeList, computerList, hardwareList);
-// console.log(comp);
 
 //TODO: Main: TODO:
-
 let img = document.createElement('img');
 img.classList.add('body-image');
 img.src = '../Images/Wallpapers/wallpaperflare.com_wallpaper.jpg';
 
+//Page wallpaper:
 document.body.appendChild(img);
 
+//Main container for drawing methods inputs and results 
 const main = document.createElement('div');
 main.classList.add('main-container');
 
+//Adding main container for methods and data drawing:
 comp.container = main;
-
-// document.body.appendChild(main);
-
-//TODO: Header TODO:
 
 //TODO: Selectors: 
 
@@ -75,7 +71,6 @@ document.body.appendChild(header);
 
 //Body, between header and footer
 document.body.appendChild(main);
-
 
 //Navigation bar:
 let navigation = document.createElement('nav');
@@ -94,12 +89,6 @@ let subMenu = document.createElement('div');
 subMenu.classList.add('header-nav-sub');
 navigation.appendChild(subMenu);
 
-// //For closing functions menu:
-// let closeSubMenu = document.createElement('a');
-// closeSubMenu.classList.add('header-sub-nav-close');
-// closeSubMenu.innerHTML = '<i class="ri-close-line"></i>';
-// subMenu.appendChild(closeSubMenu);
-
 //Just a title:
 let mainTitle = document.createElement('h2');
 mainTitle.classList.add('header-nav-title');
@@ -112,12 +101,6 @@ let cartMenu = document.createElement('div');
 cartMenu.classList.add('header-nav-cart');
 navigation.appendChild(cartMenu);
 
-// //For closing cart folder:
-// let closeCartMenu = document.createElement('a');
-// closeCartMenu.classList.add('header-sub-nav-close-cart');
-// closeCartMenu.innerHTML = '<i class="ri-close-line"></i>';
-// cartMenu.appendChild(closeCartMenu);
-
 //For opening cart folder:
 let shoppingCart = document.createElement('a');
 shoppingCart.classList.add('header-nav-shopping');
@@ -126,21 +109,26 @@ shoppingCart.innerHTML = '<i class="ri-shopping-cart-line"></i>';
 navigation.appendChild(shoppingCart);
 
 
+//Footer bar:
 let footer = document.createElement('footer');
 footer.classList.add('footer-bar');
 
+//Footer container:
 let footerContainer = document.createElement('div');
 footerContainer.classList.add('footer-bar-container');
 
+//Info label:
 let smallInfoLabel = document.createElement('h3');
 smallInfoLabel.classList.add('small-info-label');
 smallInfoLabel.innerHTML = 'About me:';
 
+//Icons container:
 let socialInfo = document.createElement('div');
 socialInfo.classList.add('footer-bar-conteiner-social-div');
 
+//Icons:
 let infoList = ['GitHub', 'Instagram', 'Facebook'];
-let references = ['https://github.com/davidmarinkovic366', 'https://www.instagram.com/serdavidiii/', 'https://www.facebook.com/david.marinkovic00/']
+let references = ['https://github.com/davidmarinkovic366/ComputerWorld-WebProject.git', 'https://www.instagram.com/serdavidiii/', 'https://www.facebook.com/david.marinkovic00/']
 let icons = ['<i class="ri-github-fill"></i>', '<i class="ri-instagram-line"></i>', '<i class="ri-facebook-circle-line"></i>'];
 for(let i = 0; i < infoList.length; i++) {
     let a = document.createElement('a');
@@ -150,14 +138,12 @@ for(let i = 0; i < infoList.length; i++) {
     footerContainer.appendChild(a);
 }
 
-// footerContainer.appendChild(socialInfo);
+//Adding elements to footer:
 footer.appendChild(smallInfoLabel);
 footer.appendChild(footerContainer);
 document.body.appendChild(footer);
 
 //TODO: Event listeners: 
-
-//FIXME: Show submenu folder: 
 subMenuButton.addEventListener('click', () => {
     drawLeftMenu(subMenu);
 
@@ -165,29 +151,16 @@ subMenuButton.addEventListener('click', () => {
     cartMenu.classList.remove('show-cartMenu');
 });
 
-// //FIXME: Close submenu folder: 
-// closeSubMenu.addEventListener('click', () => {
-//     subMenu.classList.remove('show-subMenu');
-// })
-
-//FIXME: Show cart menu:
+//Show cart menu:
 shoppingCart.addEventListener('click', () => {
     drawRightMenu(cartMenu);
     cartMenu.classList.add('show-cartMenu');
     subMenu.classList.remove('show-subMenu');
 });
 
-// //FIXME: Close cart menu:
-// closeCartMenu.addEventListener('click', () => {
-//     cartMenu.classList.remove('show-cartMenu');
-// });
-
-
-//TODO: Functions(draw?): 
 
 // Draw left menu: 
 function drawLeftMenu(host) {
-    // clearHost(host);
 
     let closeBtn = document.querySelector('.header-sub-nav-close');
     if(closeBtn != null)
@@ -206,9 +179,9 @@ function drawLeftMenu(host) {
 
 }
 
-//FIXME: Draw right menu start look:
+//Draw right menu start look:
 function drawRightMenu(host) {
-    // clearHost(host);
+
     let closeBtn = document.querySelector('.header-sub-nav-close-cart');
     if(closeBtn != null)
         closeBtn.remove();
