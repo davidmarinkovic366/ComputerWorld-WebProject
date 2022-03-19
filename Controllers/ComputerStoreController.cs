@@ -220,10 +220,13 @@ namespace WebAPI.Controllers
                                 sh.Computer = racunar;
                                 sh.Store = prodavnica;
 
+                                Context.Shelfs.Add(sh);
+
                                 racunar.ComputerStore.Add(sh);
                                 prodavnica.StoreComputer.Add(sh);
-                                await Context.SaveChangesAsync();
                                 
+                                await Context.SaveChangesAsync();
+
                                 return Ok("Uspesno smo dodali racunar u prodavnicu!");
                             }
                             catch(Exception ex) {
