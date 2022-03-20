@@ -1,0 +1,122 @@
+USE [ComputerStore]
+GO
+SET IDENTITY_INSERT [dbo].[Computers] ON 
+GO
+INSERT [dbo].[Computers] ([ID], [ComputerName], [ComputerPrice], [Image]) VALUES (1, N'Alienware Aurora R13', 356668, N'../Images/Computer/Alienware Aurora R13.png')
+GO
+INSERT [dbo].[Computers] ([ID], [ComputerName], [ComputerPrice], [Image]) VALUES (2, N'HP(R) OMEN 30L', 170337, N'../Images/Computer/HP(R) OMEN 30L.png')
+GO
+SET IDENTITY_INSERT [dbo].[Computers] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Hardwares] ON 
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (1, N'Nvidia GTX 1080Ti Founders Edition', 2, N'8GB DDR5 512bit bus', 36999, N'../Images/Hardware/Nvidia GTX 1080Ti Founders Edition.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (2, N'XFX Radeon RX 6600 XT Speedster SWFT 210', 2, N'8GB GDDR6 128bit', 99999, N'../Images/Hardware/XFX Radeon RX 6600 XT Speedster SWFT 210.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (3, N'ASUS ROG Strix LC Radeon RX 6900 XT', 2, N'16GB GDDR6 256bit', 339999, N'../Images/Hardware/ASUS ROG Strix LC Radeon RX 6900 XT.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (4, N'GIGABYTE GeForce GTX 1650 D6 WINDFORCE OC', 2, N'4GB GDDR6 128bit', 46999, N'../Images/Hardware/GIGABYTE GeForce GTX 1650 D6 WINDFORCE OC.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (5, N'AMD Ryzen 5 1600', 1, N'6Cores, 12Threads 3.2GHz (3.6GHz) AMD AM4', 23999, N'../Images/Hardware/AMD Ryzen 5 1600.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (6, N'INTEL Core i7-9700KF', 1, N'8Cores, 8Threads 3.6GHz (4.9GHz) Intel 1151', 43339, N'../Images/Hardware/INTEL Core i7-9700KF.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (7, N'AMD Ryzen 9 5950X', 1, N'16Cores, 32Threads 3.4GHz (4.9GHz) AMD AM4', 122229, N'../Images/Hardware/AMD Ryzen 9 5950X.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (8, N'INTEL Core i9-10920X', 1, N'12Cores, 24Threads 3.5GHz (4.6GHz) Intel 2066', 99999, N'../Images/Hardware/INTEL Core i9-10920X.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (9, N'SEAGATE 10TB', 3, N'3.5", SATA 3, 256MB, 7200rpm', 49999, N'../Images/Hardware/SEAGATE 10TB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (10, N'WD 2TB', 3, N'3.5", SATA III, 128MB, 7200rpm, Gold serija', 18889, N'../Images/Hardware/WD 2TB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (11, N'CORSAIR SSD 960GB', 4, N'Gen 3 M.2 PCIe NVMe MP510 Force Series', 25559, N'../Images/Hardware/CORSAIR SSD 960GB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (12, N'GIGABYTE AORUS 512GB', 4, N'M.2 2280', 13339, N'../Images/Hardware/GIGABYTE AORUS 512GB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (13, N'MSI B450 GAMING PLUS MAX', 5, N'AMD AM4(B450) ATX DDR4', 16669, N'../Images/Hardware/MSI B450 GAMING PLUS MAX.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (14, N'ASUS TUF GAMING Z590-PLUS', 5, N'Intel 1200(Z590) ATX DDR4', 33339, N'../Images/Hardware/ASUS TUF GAMING Z590-PLUS.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (15, N'KINGSTON Renegade RGB 16GB', 6, N'DDR4 3200MHz CL16', 15559, N'../Images/Hardware/KINGSTON Renegade RGB 16GB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (16, N'CORSAIR Vengeance RGB PRO 8GB', 6, N'DDR4 3200MHz CL16', 7779, N'../Images/Hardware/CORSAIR Vengeance RGB PRO 8GB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (17, N'HYPERX Predator RGB 8GB', 6, N'DDR4 3200MHz CL16', 8889, N'../Images/Hardware/HYPERX Predator RGB 8GB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (18, N'ASUS DRW-24D5MT 24X DVD-RW M-DISC', 7, N'ASUS DRW-24D5MT 24X DVD-RW M-DISC', 1999, N'../Images/Hardware/ASUS DRW-24D5MT 24X DVD-RW M-DISC.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (19, N'COOLER MASTER MASTERBOX MB520 ARGB', 8, N'Micro-ATX, Mini-ITX, ATX, Black color', 13339, N'../Images/Hardware/COOLER MASTER MASTERBOX MB520 ARGB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (20, N'COOLER MASTER MASTERBOX MB600L V2 ODD', 8, N'Micro-ATX, Mini-ITX, ATX, Black color', 10669, N'../Images/Hardware/COOLER MASTER MASTERBOX MB600L V2 ODD.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (21, N'ANTEC Gaming NX410 White', 8, N'Micro-ATX, Mini-ITX, ATX, White color', 11109, N'../Images/Hardware/ANTEC Gaming NX410 White.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (22, N'COOLER MASTER MWE 750 BRONZE V2', 9, N'750W, ATX (PS2), Non-modular, 85% efficiency', 15339, N'../Images/Hardware/COOLER MASTER MWE 750 BRONZE V2.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (23, N'ANTEC HCG 750', 9, N'750W, ATX (PS2), Modular, 92% efficiency', 22229, N'../Images/Hardware/ANTEC HCG 750.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (24, N'COOLER MASTER MASTERAIR MA410P', 10, N'CPU Cooler, Air, 120 x 120 x 25 mm', 6109, N'../Images/Hardware/COOLER MASTER MASTERAIR MA410P.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (25, N'NZXT Kraken X73 RGB', 10, N'CPU Cooler, Water, 120 x 120 x 26 mm', 32229, N'../Images/Hardware/NZXT Kraken X73 RGB.png')
+GO
+INSERT [dbo].[Hardwares] ([ID], [HardwareName], [TipID], [HardwareInfo], [HardwarePrice], [Image]) VALUES (26, N'COOLER MASTER SICKLEFLOW 120 ARGB ', 10, N'Case, Air, 120 x 120 x 25 mm', 2449, N'../Images/Hardware/COOLER MASTER SICKLEFLOW 120 ARGB.png')
+GO
+SET IDENTITY_INSERT [dbo].[Hardwares] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Contents] ON 
+GO
+INSERT [dbo].[Contents] ([ID], [ComputerID], [HardwareID]) VALUES (1, 1, 3)
+GO
+INSERT [dbo].[Contents] ([ID], [ComputerID], [HardwareID]) VALUES (2, 2, 8)
+GO
+INSERT [dbo].[Contents] ([ID], [ComputerID], [HardwareID]) VALUES (6, 1, 13)
+GO
+INSERT [dbo].[Contents] ([ID], [ComputerID], [HardwareID]) VALUES (7, 2, 14)
+GO
+INSERT [dbo].[Contents] ([ID], [ComputerID], [HardwareID]) VALUES (8, 2, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Contents] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Stores] ON 
+GO
+INSERT [dbo].[Stores] ([ID], [StoreName], [StoreAddress], [ShelfSize]) VALUES (1, N'Gigatron prodavnica G8 - Forum SC Nis', N'Forum Shopping Center, Obrenoviceva 42, Nis 18000', 25)
+GO
+INSERT [dbo].[Stores] ([ID], [StoreName], [StoreAddress], [ShelfSize]) VALUES (2, N'Gigatron prodavnica G42 - Nis', N'Vozda Karadjordja 20, Nis 18000', 45)
+GO
+INSERT [dbo].[Stores] ([ID], [StoreName], [StoreAddress], [ShelfSize]) VALUES (4, N'Gigatron prodavnica G52 - SC Stop Shop Nis', N'Bulevar Medijana 21, Nis', 35)
+GO
+SET IDENTITY_INSERT [dbo].[Stores] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Shelfs] ON 
+GO
+INSERT [dbo].[Shelfs] ([ID], [ComputerID], [StoreID]) VALUES (1, 1, 1)
+GO
+INSERT [dbo].[Shelfs] ([ID], [ComputerID], [StoreID]) VALUES (2, 2, 2)
+GO
+SET IDENTITY_INSERT [dbo].[Shelfs] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Types] ON 
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (1, N'Processor')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (2, N'Graphics card')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (3, N'HDD')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (4, N'SSD')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (5, N'Motherboard')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (6, N'Ram')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (7, N'Optical drive')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (8, N'Computer case')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (9, N'PSU')
+GO
+INSERT [dbo].[Types] ([ID], [ComponenaTip]) VALUES (10, N'Cooler')
+GO
+SET IDENTITY_INSERT [dbo].[Types] OFF
+GO
