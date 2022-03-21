@@ -108,6 +108,7 @@ export class Computer {
 
             this.drawSmallCard(deepContainer);
 
+            
             confirmButton.addEventListener('click', () => {
                 //Za automatsko zatvaranje cart-menija
                 deepContainer.parentNode.classList.remove('show-cartMenu');

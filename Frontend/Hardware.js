@@ -151,6 +151,7 @@ export class Hardware {
             deepContainer.appendChild(confirmButton);
 
             this.drawSmallCard(deepContainer);
+            
 
             confirmButton.addEventListener('click', () => {
                 //Za automatsko zatvaranje cart-menija

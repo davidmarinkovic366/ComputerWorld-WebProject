@@ -1307,6 +1307,7 @@ export class Company {
                 }
             })
         });
+        
 
         //Metoda za prikaz svog hardvera koji prodaje ova kompanija;
         selectSubList[14].addEventListener('click', () => {
