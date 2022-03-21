@@ -131,11 +131,6 @@ export class Company {
 
             let labelList = ['Store Name:', 'Store Address:', 'Shelf count:'];
             for(let i = 0; i < labelList.length; i++) {
-                //FIXME: Obrisi komentar;
-                /*<div class="small-input-div">
-                    <label> </label>
-                    <input> </input>
-                </div> */
 
                 //Kontejner za jednu labelu i jedan input element;
                 let smallInputContainer = document.createElement('div');
@@ -173,17 +168,26 @@ export class Company {
 
             button.addEventListener('click', () => {
 
-                //Provere da li je sve uneseno se desavaju na backend-u;
-                fetch(`https://localhost:5001/ComputerStore/DodajProdavnicu/${inputList[0].value}/${inputList[1].value}/${inputList[2].value}`,{
-                    method:"POST"
-                });
-                
-                //Za ciscenje svih input elementa nakon;
-                inputList.forEach(e => {
-                    e.value = '';
-                });
-                alert('Nova prodavnica je dodata!');
-                
+                if(inputList[0].value == '' || inputList[1].value == '' || inputList[2].value == '')
+                    alert('Niste popunili sve podatke!');
+                else {
+                    //Provere da li je sve uneseno se desavaju na backend-u;
+                    fetch(`https://localhost:5001/ComputerStore/DodajProdavnicu/${inputList[0].value}/${inputList[1].value}/${inputList[2].value}`,{
+                        method:"POST"
+                    }).then(p => {
+                        if(p.ok) {
+                            alert('Nova prodavnica je dodata!');
+                        }
+                        else {
+                            alert('Doslo je do greske!');
+                        }
+                    })
+                    
+                    //Za ciscenje svih input elementa nakon;
+                    inputList.forEach(e => {
+                        e.value = '';
+                    });
+                }
             });
 
         });
@@ -350,11 +354,6 @@ export class Company {
             cont.classList.add('main-container-occupancy');
             mainContainer.appendChild(cont);
 
-            //Draw yourself to body!
-            // this.storeList.forEach(q => {
-            //     q.drawMyOccupancy(cont);
-            // })
-
             fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
                 method:"GET"
             }).then(p => {
@@ -425,12 +424,6 @@ export class Company {
                     });
                 })
             });
-            // this.storeList.forEach(s => {
-            //     let opt = document.createElement('option');
-            //     opt.text = s.name;
-            //     opt.value = s.id;
-            //     list.appendChild(opt);
-            // })
 
             //Dugme za potvrdu;
             let button = document.createElement('button');
@@ -478,8 +471,7 @@ export class Company {
             });
         });
 
-        //FIXME: Dodajemo implementaciju, proveri za css takodje kako se ponasa
-        //kad zavrsis!
+        //Funkcija za promenu imena prodavnice;
         selectSubList[5].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -546,21 +538,23 @@ export class Company {
                     inputContainerDiv.appendChild(button);
 
                     button.addEventListener('click', () => {
-                        // console.log(`Store: ${selectList.options[selectList.selectedIndex].text} with id: ${selectList.options[selectList.selectedIndex].value}`);
-                        console.log(`New name: ${inputElement.value}`);
-                        fetch(`https://localhost:5001/ComputerStore/IzmeniImeProdavnice/${selectList.options[selectList.selectedIndex].value}/${inputElement.value}`, {
-                            method:"PUT"
-                        }).then(p => {
-                            if(!p.ok) {
-                                //Ako je doslo do greske, odstampaj vracenu poruku;
-                                p.text().then(function (text) {
-                                    alert('Greska: ' + text); 
-                                });
-                            }
-                            else {
-                                alert('Uspesno smo promenili ime prodavnice!');
-                            }
-                        })
+                        if(inputElement.value == '')
+                            alert('Niste popunili sve zahtevane podatke!');
+                        else {
+                            fetch(`https://localhost:5001/ComputerStore/IzmeniImeProdavnice/${selectList.options[selectList.selectedIndex].value}/${inputElement.value}`, {
+                                method:"PUT"
+                            }).then(p => {
+                                if(!p.ok) {
+                                    //Ako je doslo do greske, odstampaj vracenu poruku;
+                                    p.text().then(function (text) {
+                                        alert('Greska: ' + text); 
+                                    });
+                                }
+                                else {
+                                    alert('Uspesno smo promenili ime prodavnice!');
+                                }
+                            })
+                        }
                     })
 
                 })
@@ -691,28 +685,27 @@ export class Company {
             mainContainer.appendChild(button);
 
             button.addEventListener('click', () => {
-                // console.log('Name: ' + selectList[0].value);
-                // console.log('Image: ' + selectList[1].value);
-                // console.log('../Images/Computer/RAZER R1 EDITION.png')
-
-                //FIXME: Popravi, nesto ne radi oko slanja podataka, pogledaj i backend za svaki slucaj!
-                //FIXME: Popravljeno, problem bio sto su se slali '/' i .png na kraju;
-                fetch(`https://localhost:5001/ComputerStore/DodajRacunar/${selectList[0].value}/${selectList[1].value}`,{
-                    method:"POST"
-                }).then(p => {
-                    if(!p.ok) {
-                        //Ako je doslo do greske, odstampaj vracenu poruku;
-                        p.text().then(function (text) {
-                            alert('Greska: ' + text); 
-                        });
-                    }
-                    else {
-                        alert('Uspesno smo dodali racunar u bazu podataka!');
-                    }
-                })
+                if(selectList[0].value == '' || selectList[1].value == '')
+                    alert('Niste popunili sve potrebne podatke!');
+                else {
+                    fetch(`https://localhost:5001/ComputerStore/DodajRacunar/${selectList[0].value}/${selectList[1].value}`,{
+                        method:"POST"
+                    }).then(p => {
+                        if(!p.ok) {
+                            //Ako je doslo do greske, odstampaj vracenu poruku;
+                            p.text().then(function (text) {
+                                alert('Greska: ' + text); 
+                            });
+                        }
+                        else {
+                            alert('Uspesno smo dodali racunar u bazu podataka!');
+                        }
+                    })
+                }
             });
         });
 
+        //Funkcija za dodavanje recunara u prodavnicu
         selectSubList[8].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
@@ -1035,11 +1028,20 @@ export class Company {
                     mainContainer.appendChild(label);
 
                     button.addEventListener('click', () => {
-                        //FIXME: Popravi CORS-e da omogucis da se vrsi PUT 
-                        //FIXME: Popravljeno!
-                        fetch(`https://localhost:5001/ComputerStore/IzmeniCenuRacunara/${selectEl.options[selectEl.selectedIndex].value}/${inputEl.value}`, {
-                            method:"PUT"
-                        });
+                        if(inputEl.value == '')
+                            alert('Niste popunili sve podatke!');
+                        else {
+                            fetch(`https://localhost:5001/ComputerStore/IzmeniCenuRacunara/${selectEl.options[selectEl.selectedIndex].value}/${inputEl.value}`, {
+                                method:"PUT"
+                            }).then(p => {
+                                if(p.ok) {
+                                    alert('Uspesno smo promenili cenu racunara!');
+                                }
+                                else {
+                                    alert('Doslo je do greske!');
+                                }
+                            })
+                        }
                     });
 
                     //Update labele cene racunara;
@@ -1289,16 +1291,21 @@ export class Company {
 
 
             button.addEventListener('click', () => {
-                console.log(`Name: ${selectList[0].value}`);
-                console.log(`Tip: ${selectEl.options[selectEl.selectedIndex].text} i sifra: ${selectEl.options[selectEl.selectedIndex].value}`);
-                console.log(`Info: ${selectList[1].value}`);
-                console.log(`Price: ${selectList[2].value}`);
-                console.log(`Image src: ${selectList[3].value}`);
-                fetch(`https://localhost:5001/ComputerStore/DodajHardver/${selectList[0].value}/${selectEl.options[selectEl.selectedIndex].value}/${selectList[1].value}/${selectList[2].value}/${selectList[3].value}`, {
-                    method:"POST"
-                });
+                if(selectList[0].value == '' || selectList[1].value == '' || selectList[2].value == '' || selectList[3].value == '')
+                    alert('Niste popunili sve podatke!');
+                else {
+                    fetch(`https://localhost:5001/ComputerStore/DodajHardver/${selectList[0].value}/${selectEl.options[selectEl.selectedIndex].value}/${selectList[1].value}/${selectList[2].value}/${selectList[3].value}`, {
+                        method:"POST"
+                    }).then(p => {
+                        if(p.ok) {
+                            alert('Uspesno ste dodali komponentu u bazu podataka!');
+                        }
+                        else {
+                            alert('Doslo je do greske!');
+                        }
+                    })
+                }
             })
-
         });
 
         //Metoda za prikaz svog hardvera koji prodaje ova kompanija;

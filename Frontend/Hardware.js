@@ -111,7 +111,14 @@ export class Hardware {
             //Uklanja samo spoj koji povezuje racunar i hardver - Contains;
             fetch(`https://localhost:5001/ComputerStore/UkloniHardverIzRacunara/${computerId}/${this.id}`, {
                 method:"DELETE"
-            });
+            }).then(p => {
+                if(p.ok) {
+                    alert('Komponenta uspesno uklonjena iz racunara!');
+                }
+                else {
+                    alert('Doslo je do greske!');
+                }
+            })
         })
 
         subContainer.appendChild(price);
@@ -146,80 +153,84 @@ export class Hardware {
             this.drawSmallCard(deepContainer);
 
             confirmButton.addEventListener('click', () => {
-
                 //Za automatsko zatvaranje cart-menija
                 deepContainer.parentNode.classList.remove('show-cartMenu');
 
-                //Za otkazivanje kupovine
-                let closeBtn = document.createElement('a');
-                closeBtn.classList.add('close-form-button');
-                closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-
-                //Za uklanjanje forme za potvrdu iz body-ja
-                closeBtn.addEventListener('click', () => {
-                    this.removeForm(screenForm);
-                })
-
-                //Forma koja zauzima ceo ekran
-                let screenForm = document.createElement('div');
-                screenForm.classList.add('screen-form');
-
-                document.body.appendChild(screenForm);
-                
-                //Forma za potvrdu kupovine:
-                let form = document.createElement('div');
-                form.classList.add('confirm-form');
-                
-                screenForm.appendChild(closeBtn);
-                screenForm.appendChild(form);
-
-                let labels = ['First Name:', 'Last Name:', 'Address:', 'Credit card num:', 'Phone number:'];
-                let inputList = [];
-
-                for(let i = 0; i < labels.length; i++) {
-                    //Za input i labelu:
-                    let smallerInputContainer = document.createElement('div');
-                    smallerInputContainer.classList.add('smaller-input-container');
-
-                    //Labela:
-                    let label = document.createElement('label');
-                    label.classList.add('smaller-label');
-                    label.innerHTML = labels[i];
-
-                    //Input:
-                    let inputEl = document.createElement('input');
-                    inputEl.classList.add('form-input');
-
-                    inputList.push(inputEl);
-                    
-                    if(i < 3)
-                        inputEl.type = 'text';
-                    else 
-                        inputEl.type = 'number';
-                    
-                    smallerInputContainer.appendChild(label);
-                    smallerInputContainer.appendChild(inputEl);
-
-                    form.appendChild(smallerInputContainer);
+                if(document.querySelector('.screen-form') != null) {
+                    console.log('Vec je otvoreno!');
                 }
+                else {
+                    //Za otkazivanje kupovine
+                    let closeBtn = document.createElement('a');
+                    closeBtn.classList.add('close-form-button');
+                    closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
 
-                let button = document.createElement('button');
-                button.classList.add('form-confirm-button');
-                button.innerHTML = 'Confirm purchase' + '<i class="fa-solid fa-check-double"></i>';
-                form.appendChild(button);
-
-                button.addEventListener('click', () => {
-                    //Provera da li su svi elementi popunjeni
-                    if(inputList[0].value == '' ||  inputList[1].value == '' ||  inputList[2].value == '' ||  inputList[3].value == '' || inputList[4].value == '')
-                        alert('Niste uneli sve podatke!');
-                    else {
-                        //Ispisivanje poruke, SMS bi trebao da posalje neki automat na osnovu unesenih podataka, barem je takva ideja
-                        alert(`Uspesno ste potvrdili kupovinu!\nUskoro cete dobiti poruku za validaciju transakcije na broju: ${inputList[4].value}\nHvala vam na ukazanom poverenju!`);
-                        //Uklanjanje forme i ciscenje cart-menija, jer smo zavrsili sa kupovinom
+                    //Za uklanjanje forme za potvrdu iz body-ja
+                    closeBtn.addEventListener('click', () => {
                         this.removeForm(screenForm);
-                        this.clearCart(deepContainer);
+                    })
+
+                    //Forma koja zauzima ceo ekran
+                    let screenForm = document.createElement('div');
+                    screenForm.classList.add('screen-form');
+
+                    document.body.appendChild(screenForm);
+                    
+                    //Forma za potvrdu kupovine:
+                    let form = document.createElement('div');
+                    form.classList.add('confirm-form');
+                    
+                    screenForm.appendChild(closeBtn);
+                    screenForm.appendChild(form);
+
+                    let labels = ['First Name:', 'Last Name:', 'Address:', 'Credit card num:', 'Phone number:'];
+                    let inputList = [];
+
+                    for(let i = 0; i < labels.length; i++) {
+                        //Za input i labelu:
+                        let smallerInputContainer = document.createElement('div');
+                        smallerInputContainer.classList.add('smaller-input-container');
+
+                        //Labela:
+                        let label = document.createElement('label');
+                        label.classList.add('smaller-label');
+                        label.innerHTML = labels[i];
+
+                        //Input:
+                        let inputEl = document.createElement('input');
+                        inputEl.classList.add('form-input');
+
+                        inputList.push(inputEl);
+                        
+                        if(i < 3)
+                            inputEl.type = 'text';
+                        else 
+                            inputEl.type = 'number';
+                        
+                        smallerInputContainer.appendChild(label);
+                        smallerInputContainer.appendChild(inputEl);
+
+                        form.appendChild(smallerInputContainer);
                     }
-                })
+
+                    let button = document.createElement('button');
+                    button.classList.add('form-confirm-button');
+                    button.innerHTML = 'Confirm purchase' + '<i class="fa-solid fa-check-double"></i>';
+                    form.appendChild(button);
+
+                    button.addEventListener('click', () => {
+                        //Provera da li su svi elementi popunjeni
+                        if(inputList[0].value == '' ||  inputList[1].value == '' ||  inputList[2].value == '' ||  inputList[3].value == '' || inputList[4].value == '')
+                            alert('Niste uneli sve podatke!');
+                        else {
+                            //Ispisivanje poruke, SMS bi trebao da posalje neki automat na osnovu unesenih podataka, barem je takva ideja
+                            alert(`Uspesno ste potvrdili kupovinu!\nUskoro cete dobiti poruku za validaciju transakcije na broju: ${inputList[4].value}\nHvala vam na ukazanom poverenju!`);
+                            //Uklanjanje forme i ciscenje cart-menija, jer smo zavrsili sa kupovinom
+                            this.removeForm(screenForm);
+                            this.clearCart(deepContainer);
+                        }
+                    })
+                }
             });
 
         }
