@@ -153,6 +153,7 @@ subMenuButton.addEventListener('click', () => {
 //Show cart menu:
 shoppingCart.addEventListener('click', () => {
     drawRightMenu(cartMenu);
+
     cartMenu.classList.add('show-cartMenu');
     subMenu.classList.remove('show-subMenu');
 });

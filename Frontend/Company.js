@@ -406,13 +406,31 @@ export class Company {
             list.classList.add('simple-input-list');
             inputContainerDiv.appendChild(list);
 
+
             //Dodavanje opcija u listu;
-            this.storeList.forEach(s => {
-                let opt = document.createElement('option');
-                opt.text = s.name;
-                opt.value = s.id;
-                list.appendChild(opt);
-            })
+            let storeList = [];
+            fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
+                method:"GET"
+            }).then(p => {
+                p.json().then(stores => {
+                    stores.forEach(store => {
+                        let str = new Store(store.storeID, store.storeName, store.storeAddress, store.shelfSize, store.racunari);
+                        storeList.push(str);
+                    })
+                    storeList.forEach(s => {
+                        let opt = document.createElement('option');
+                        opt.text = s.name;
+                        opt.value = s.id;
+                        list.appendChild(opt);
+                    });
+                })
+            });
+            // this.storeList.forEach(s => {
+            //     let opt = document.createElement('option');
+            //     opt.text = s.name;
+            //     opt.value = s.id;
+            //     list.appendChild(opt);
+            // })
 
             //Dugme za potvrdu;
             let button = document.createElement('button');
