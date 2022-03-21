@@ -584,6 +584,31 @@ namespace WebAPI.Controllers
             }
         }
 
+        [Route("IzmeniImeProdavnice/{id}/{newName}")]
+        [HttpPut]
+        public async Task<ActionResult> IzmeniImeProdavnice(int id, string newName) {
+            if(id <= 0 || String.IsNullOrWhiteSpace(newName))
+                return BadRequest("Neispravni podaci!");
+            else {
+                var prod = await Context.Stores.Where(p => p.ID == id)
+                                               .FirstOrDefaultAsync();
+                if(prod == null)
+                    return BadRequest("Navedena prodavnica se ne nalazi u bazi podataka!");
+                else {
+                    try {
+                        prod.StoreName = newName;
+                        Context.Stores.Update(prod);
+                        await Context.SaveChangesAsync();
+
+                        return Ok("Uspesno promenjeno ime prodavnice!");
+                    }
+                    catch(Exception ex) {
+                        return BadRequest(ex.Message);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Delete
@@ -621,6 +646,56 @@ namespace WebAPI.Controllers
                 }
                 catch(Exception ex) {
                     return BadRequest(ex.Message);
+                }
+            }
+        }
+
+
+        [Route("ObrisiProdavnicuZajednoSaPodacima/{id}")]
+        [HttpDelete]
+        public async Task<ActionResult> ObrisiProdavnicuZajednoSaPodacima(int id = 0) {
+            if(id <= 0) {
+                return BadRequest("Navedena prodavnica ne postoji!");
+            }
+            else {
+                var prod = await Context.Stores.Where(p => p.ID == id)
+                                               .Include(p => p.StoreComputer)
+                                               .ThenInclude(p => p.Computer)
+                                               .FirstOrDefaultAsync();
+                if(prod == null) {
+                    return BadRequest("Navedena prodavnica se vise ne nalazi u nasoj bazi podataka!");
+                }
+                else {
+                    //Hvatamo sve shelf-ove, da bi ih obrisali iz racunara!
+                    var shelfList = await Context.Shelfs.Where(p => p.Store.ID == id)
+                                                        .Include(p => p.Computer)
+                                                        .ThenInclude(p => p.ComputerStore)
+                                                        .ToListAsync();
+                                               
+                    if(shelfList == null) { //Ako prodavnica nema racunara?
+                        try {
+                            Context.Stores.Remove(prod);
+                            await Context.SaveChangesAsync();
+
+                            return Ok("Prodavnica uspesno obrisana!");
+                        }
+                        catch(Exception ex) {
+                            return BadRequest(ex.Message);
+                        }
+                    }
+                    else {  //Inace moramo i iz racunara da uklonimo vezu!
+                        shelfList.ForEach(p => {
+                            //Brisemo za sve racunare koji su ikada imali vezu prema ovoj prodavnici istu!
+                            p.Computer.ComputerStore.Remove(p);
+                            //Brisemo sve shelf-ove koje su bile vezane za ovu prodavnicu!
+                            Context.Shelfs.Remove(p);
+                        });
+
+                        Context.Stores.Remove(prod);
+                        await Context.SaveChangesAsync();
+
+                        return Ok("Prodavnica uspesno obrisana!");
+                    }
                 }
             }
         }

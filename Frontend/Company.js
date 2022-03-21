@@ -20,7 +20,7 @@ export class Company {
         let selectList = [];
         let selectSubList = [];
 
-        let list1 = ['Add Store', 'Add To Store', 'Show All Stores', 'Show Occupancy', 'Browse All Items'];
+        let list1 = ['Add Store', 'Add To Store', 'Show All Stores', 'Show Occupancy', 'Browse All Items', 'Change Name', 'Remove Store'];
         let list2 = ['Add Computer', 'Add Component', 'Computer Hardware', 'Change Price', 'Remove Component', 'Browse'];
         let list3 = ['Add Hardware', 'Browse'];
         let bigList = [list1, list2, list3];
@@ -351,10 +351,20 @@ export class Company {
             mainContainer.appendChild(cont);
 
             //Draw yourself to body!
-            this.storeList.forEach(q => {
-                q.drawMyOccupancy(cont);
-            })
+            // this.storeList.forEach(q => {
+            //     q.drawMyOccupancy(cont);
+            // })
 
+            fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
+                method:"GET"
+            }).then(p => {
+                p.json().then(stores => {
+                    stores.forEach(store => {
+                        let str = new Store(store.storeID, store.storeName, store.storeAddress, store.shelfSize, store.racunari);
+                        str.drawMyOccupancy(cont);
+                    })
+                })
+            })
         });
 
         //Funkcija za prikaz svih racunara odredjene prodavnice;
@@ -450,8 +460,170 @@ export class Company {
             });
         });
 
-        //Funkcija za dodavanje novog racunara;
+        //FIXME: Dodajemo implementaciju, proveri za css takodje kako se ponasa
+        //kad zavrsis!
         selectSubList[5].addEventListener('click', () => {
+            this.closeLeftMenu();
+            this.clearAndRemove();
+
+            let mainContainer = document.createElement('div');
+            mainContainer.classList.add('main-container-div');
+            this.container.appendChild(mainContainer);
+
+            //Kontejner za sve input elemente;
+            let inputContainerDiv = document.createElement('div');
+            inputContainerDiv.classList.add('input-container-div');
+
+            mainContainer.appendChild(inputContainerDiv);
+
+            let storeList = [];
+            fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
+                method:"GET"
+            }).then(p => {
+                p.json().then(stores => {
+                    stores.forEach(store => {
+                        let str = new Store(store.storeID, store.storeName, store.storeAddress, store.shelfSize, store.racunari);
+                        storeList.push(str);
+                    })
+                    //Selektori za input element;
+                    let inputElement = document.createElement('input');
+                    inputElement.type = 'text';
+                    inputElement.classList.add('input-element');
+                    
+                    //Selektor za listu;
+                    let selectList = document.createElement('select');
+                    selectList.classList.add('simple-input-list'); 
+
+                    let labels = ['Chose store: ', 'New name: '];
+                    let selectors = [selectList, inputElement];
+
+                    for(let i = 0; i < labels.length; i++) {
+                        //Kontejner za labelu & input element/listu;
+                        let smallInputContainer = document.createElement('div');
+                        smallInputContainer.classList.add('small-input-div');
+            
+                        inputContainerDiv.appendChild(smallInputContainer);
+
+                        //Labela;
+                        let label = document.createElement('label');
+                        label.classList.add('simple-label');
+                        label.innerHTML = labels[i];
+                        
+                        smallInputContainer.appendChild(label);
+                        smallInputContainer.appendChild(selectors[i]);
+                    }
+
+                    //Popunjavanje elementa select liste;
+                    storeList.forEach(s => {
+                        let opt = document.createElement('option');
+                        opt.text = s.name;
+                        opt.value = s.id;
+                        selectList.appendChild(opt);
+                    })
+
+                    let button = document.createElement('button');
+                    button.classList.add('simple-button');
+                    button.innerHTML = 'Change' + '<i class="fa-solid fa-arrows-rotate"></i>';
+
+                    inputContainerDiv.appendChild(button);
+
+                    button.addEventListener('click', () => {
+                        // console.log(`Store: ${selectList.options[selectList.selectedIndex].text} with id: ${selectList.options[selectList.selectedIndex].value}`);
+                        console.log(`New name: ${inputElement.value}`);
+                        fetch(`https://localhost:5001/ComputerStore/IzmeniImeProdavnice/${selectList.options[selectList.selectedIndex].value}/${inputElement.value}`, {
+                            method:"PUT"
+                        }).then(p => {
+                            if(!p.ok) {
+                                //Ako je doslo do greske, odstampaj vracenu poruku;
+                                p.text().then(function (text) {
+                                    alert('Greska: ' + text); 
+                                });
+                            }
+                            else {
+                                alert('Uspesno smo promenili ime prodavnice!');
+                            }
+                        })
+                    })
+
+                })
+            })
+        });
+
+        //Funkcija za brisanje prodavnice iz baze podataka;
+        selectSubList[6].addEventListener('click', () => {
+            this.closeLeftMenu();
+            this.clearAndRemove();
+
+            let mainContainer = document.createElement('div');
+            mainContainer.classList.add('main-container-div');
+            this.container.appendChild(mainContainer);
+
+            //Kontejner za sve input elemente;
+            let inputContainerDiv = document.createElement('div');
+            inputContainerDiv.classList.add('input-container-div');
+
+            mainContainer.appendChild(inputContainerDiv);
+
+            //Kontejner za labelu i select listu
+            let smallInputContainer = document.createElement('div');
+            smallInputContainer.classList.add('small-input-div');
+    
+            inputContainerDiv.appendChild(smallInputContainer);
+
+            let storeList = [];
+            fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
+                method:"GET"
+            }).then(p => {
+                p.json().then(stores => {
+                    stores.forEach(store => {
+                        let str = new Store(store.storeID, store.storeName, store.storeAddress, store.shelfSize, store.racunari);
+                        storeList.push(str);
+                    })
+
+                    let label = document.createElement('label');
+                    label.classList.add('simple-label');
+                    label.innerHTML = 'Store for removing: ';
+
+                    let selectEl = document.createElement('select');
+                    selectEl.classList.add('simple-input-list');
+
+                    storeList.forEach(s => {
+                        let opt = document.createElement('option');
+                        opt.text = s.name;
+                        opt.value = s.id;
+                        selectEl.appendChild(opt);
+                    })
+
+                    smallInputContainer.appendChild(label);
+                    smallInputContainer.appendChild(selectEl);
+
+                    let button = document.createElement('button');
+                    button.classList.add('simple-button');
+                    button.innerHTML = 'Remove' + '<i class="ri-delete-bin-line"></i>';
+
+                    inputContainerDiv.appendChild(button);
+
+                    button.addEventListener('click', () => {
+                        fetch(`https://localhost:5001/ComputerStore/ObrisiProdavnicuZajednoSaPodacima/${selectEl.options[selectEl.selectedIndex].value}`, {
+                            method:"DELETE"
+                        }).then(p => {
+                            if(!p.ok) {
+                                //Ako je doslo do greske, odstampaj vracenu poruku;
+                                p.text().then(function (text) {
+                                    alert('Greska: ' + text); 
+                                });
+                            }
+                            else {
+                                alert('Uspesno smo obrisali prodavnicu!');
+                            }
+                        })
+                    });
+                })
+            })
+        });
+
+        //Funkcija za dodavanje novog racunara;
+        selectSubList[7].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -523,7 +695,7 @@ export class Company {
             });
         });
 
-        selectSubList[6].addEventListener('click', () => {
+        selectSubList[8].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -662,7 +834,7 @@ export class Company {
         });
 
         //Metoda za prikaz hardvera racunara;
-        selectSubList[7].addEventListener('click', () => {
+        selectSubList[9].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -759,7 +931,7 @@ export class Company {
 
 
         //Metoda za rucnu promenu cene racunara;
-        selectSubList[8].addEventListener('click', () => {
+        selectSubList[10].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -861,7 +1033,7 @@ export class Company {
         });
 
         //Metoda za uklanjanje hardvera iz racunara;
-        selectSubList[9].addEventListener('click', () => {
+        selectSubList[11].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -961,7 +1133,7 @@ export class Company {
 
 
         //Metoda za prikaz svih racunara koje prodaje ova kompanija;
-        selectSubList[10].addEventListener('click', () => {
+        selectSubList[12].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -1002,7 +1174,7 @@ export class Company {
         //FIXME: ekrana da radi!
 
         //Metoda za dodavanje novog hardvera;
-        selectSubList[11].addEventListener('click', () => {
+        selectSubList[13].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -1112,7 +1284,7 @@ export class Company {
         });
 
         //Metoda za prikaz svog hardvera koji prodaje ova kompanija;
-        selectSubList[12].addEventListener('click', () => {
+        selectSubList[14].addEventListener('click', () => {
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -1224,8 +1396,6 @@ export class Company {
                 })
             })
         });
-
-
     }
 
     //Just read the name of function..
