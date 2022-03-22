@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
 
         #region HttpPost
 
-        //FIXME: Ne koristi se, upotrebljeno samo za inicijalno pre rada sa bazom podataka!
+        //TODO: Ne koristi se, upotrebljeno samo za inicijalno pre rada sa bazom podataka!
         [Route("DodajTip")]
         [HttpPost]
         public async Task<ActionResult> DodajTip([FromBody] Tip tip) {
@@ -56,15 +56,15 @@ namespace WebAPI.Controllers
                     return BadRequest("Ovaj tip komponente ne postoji u bazi podataka!");
                 }                
                 else {
-
-                    Hardware nova = new Hardware();
-                    nova.HardwareName = name;
-                    nova.HardwareInfo = info;
-                    nova.Image = image;
-                    nova.HardwarePrice = price;
-                    nova.TipID = type.Id;
-
                     try {
+
+                        Hardware nova = new Hardware();
+                        nova.HardwareName = name;
+                        nova.HardwareInfo = info;
+                        nova.Image = "../Images/Hardware/" + image + ".png";
+                        nova.HardwarePrice = price;
+                        nova.TipID = tip;
+                    
                         Context.Hardwares.Add(nova);
                         await Context.SaveChangesAsync();
                         return Ok("Novi hardver je dodat u bazu podataka!");

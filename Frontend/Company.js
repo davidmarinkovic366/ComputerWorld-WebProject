@@ -628,6 +628,23 @@ export class Company {
                             else {
                                 alert('Uspesno smo obrisali prodavnicu!');
                             }
+
+                            while(selectEl.firstChild)
+                                selectEl.removeChild(selectEl.lastChild);
+
+                            fetch(`https://localhost:5001/ComputerStore/VratiSveProdavnice`, {
+                                method:"GET"
+                            }).then(p => {
+                                p.json().then(stores => {
+                                    stores.forEach(store => {
+                                        // let str = new Store(store.storeID, store.storeName, store.storeAddress, store.shelfSize, store.racunari);
+                                        let opt = document.createElement('option');
+                                        opt.text = store.storeName;
+                                        opt.value = store.storeID;
+                                        selectEl.appendChild(opt);
+                                    })
+                                })
+                            });
                         })
                     });
                 })
@@ -776,7 +793,14 @@ export class Company {
 
                 fetch(`https://localhost:5001/ComputerStore/DodajKomponentuRacunaru/${comp}/${hardw}`, {
                     method:"POST"
-                });
+                }).then(p => {
+                    if(p.ok) {
+                        alert('Uspesno smo dodali komponentu racunaru!');
+                    }
+                    else {
+                        alert('Doslo je do greske!');
+                    }
+                })
             })
 
             let computersList = [];
