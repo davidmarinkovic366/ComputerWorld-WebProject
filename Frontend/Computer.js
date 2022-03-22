@@ -18,7 +18,7 @@ export class Computer {
         .then(p => {
             p.json().then(a => {
                 a.forEach(b => {
-                    console.log(b.hardwareList);
+                    // console.log(b.hardwareList);
                     listaHardvera.push(b.hardwareList);
                 })
 
@@ -28,7 +28,7 @@ export class Computer {
                 listaHardvera.forEach(p => {
                     description += ' - ' + p.hardwareName;
                 })
-                console.log(description);
+                // console.log(description);
                 
                 //Div koji sluzi kao kontejner za crtanje karte ovog racunara;
                 let cardContainer = document.createElement('div');
@@ -114,7 +114,7 @@ export class Computer {
                 deepContainer.parentNode.classList.remove('show-cartMenu');
 
                 if(document.querySelector('.screen-form') != null)
-                    console.log('Vec je aktivirano!');
+                    // console.log('Vec je aktivirano!');
                 else {
 
                     //Za otkazivanje kupovine

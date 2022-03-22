@@ -137,7 +137,7 @@ export class Hardware {
 
         //Ako prvi put dodajemo;
         if(deepCont == null) {
-            console.log('Poziva mene, dodaje se i deepContainer');
+            // console.log('Poziva mene, dodaje se i deepContainer');
             
             const cart = document.querySelector('.header-nav-cart');
 
@@ -158,7 +158,7 @@ export class Hardware {
                 deepContainer.parentNode.classList.remove('show-cartMenu');
 
                 if(document.querySelector('.screen-form') != null) {
-                    console.log('Vec je otvoreno!');
+                    // console.log('Vec je otvoreno!');
                 }
                 else {
                     //Za otkazivanje kupovine

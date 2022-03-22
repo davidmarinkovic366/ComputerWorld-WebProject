@@ -341,7 +341,7 @@ export class Company {
 
         //Funkcija prikazi zauzetost:
         selectSubList[3].addEventListener('click', () => {
-            console.log('Show occupancy');
+            // console.log('Show occupancy');
             this.closeLeftMenu();
             this.clearAndRemove();
 
@@ -455,7 +455,7 @@ export class Company {
                 })
                 .then(p => {
                     p.json().then(computers => {
-                        console.log(computers);
+                        // console.log(computers);
                         computers.forEach(computer => {
                             computer.racunari.forEach(s => {
                                 let comp = new Computer(s.computerId, s.computerName, s.computerPrice, null, s.image);
@@ -837,7 +837,7 @@ export class Company {
 
                     selectList[0].addEventListener('click', () => {
                         let listaHardvera = [];
-                        console.log(selectList[0].options[selectList[0].selectedIndex].value);
+                        // console.log(selectList[0].options[selectList[0].selectedIndex].value);
                         fetch(`https://localhost:5001/ComputerStore/VratiSveOvogTipa/${selectList[0].options[selectList[0].selectedIndex].value}`, {
                             method:"GET"
                         }).then(p => {
@@ -848,7 +848,7 @@ export class Company {
                                 while(selectList[1].firstChild)
                                     selectList[1].removeChild(selectList[1].lastChild);
 
-                                console.log(listaHardvera);
+                                // console.log(listaHardvera);
                                 listaHardvera.forEach(s => {
                                     let opt = document.createElement('option');
                                     opt.text = s.hardwareName;
@@ -1201,11 +1201,11 @@ export class Company {
             method:"GET"}).then(p => {
                 p.json().then(computers => {
                     computers.forEach(computer => {
-                        console.log(computer);
+                        // console.log(computer);
                         let comp = new Computer(computer.id, computer.computerName, computer.computerPrice, null, computer.image);
                         computersList.push(comp);
                     })
-                    console.log(computersList);
+                    // console.log(computersList);
                     computersList.forEach(s => {
                         s.drawMyselfToCard(browseContainer);
                     })
